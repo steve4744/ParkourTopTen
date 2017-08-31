@@ -1,0 +1,16 @@
+name: ParkourTopTen
+main: io.github.steve4744.ParkourTopTen.ParkourTopTen
+version: 1.0
+description: Plugin for Parkour to show top ten heads
+author: steve4744 (based on TopTenHeads by tastybento)
+depends: [Parkour]
+commands:
+    parkourtopten:
+        aliases: [ptt]
+        description: Parkour top ten command
+        usage: "Usage: /ptt create (course) OR /ptt remove [all]"
+permissions:
+    parkourtopten.admin:
+        description: can create and remove top ten displays
+        default: op        
+    
