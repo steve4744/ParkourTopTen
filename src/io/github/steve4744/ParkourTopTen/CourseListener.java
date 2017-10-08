@@ -50,7 +50,7 @@ public class CourseListener implements Listener {
     	}
     }
 
-    private void displayTopTen() {
+    public void displayTopTen() {
         if (topTenLocation == null) {
             plugin.getLogger().severe("The location of the top ten world does not exist. Maybe a world was deleted?");
             return;
@@ -101,6 +101,9 @@ public class CourseListener implements Listener {
                 	skull.setOwningPlayer(player);
                 }
                 skull.update();
+            } else {
+            	// if there's no more signs then stop
+            	return;
             }
 
             // Move to the next block
@@ -127,6 +130,9 @@ public class CourseListener implements Listener {
                     BlockFace opp = directionFacing.getOppositeFace();
                     Block attachToBlock = b.getRelative(BlockFace.UP).getRelative(opp);
                     attachToBlock.setType(Material.AIR);
+                } else {
+                	// no more signs
+                	return;
                 }
                 b = b.getRelative(direction);
             }
@@ -151,6 +157,8 @@ public class CourseListener implements Listener {
                 BlockFace opp = directionFacing.getOppositeFace();
                 Block attachToBlock = b.getRelative(BlockFace.UP).getRelative(opp);
                 attachToBlock.setType(Material.AIR);
+            } else {
+            	return;
             }
             b = b.getRelative(direction);
         }
