@@ -95,7 +95,7 @@ public class CourseListener implements Listener {
                 Skull skull = (Skull)attachToBlock.getState();
                 skull.setRotation(directionFacing);
                 skull.setSkullType(SkullType.PLAYER);
-                if (Bukkit.getVersion().contains("1.9")) {
+                if (Bukkit.getVersion().contains("1.9") || Bukkit.getVersion().contains("1.8")) {
                 	skull.setOwner(name);
                 } else {
                 	skull.setOwningPlayer(player);
