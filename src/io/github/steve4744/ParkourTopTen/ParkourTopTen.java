@@ -3,15 +3,19 @@ package io.github.steve4744.ParkourTopTen;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import io.github.steve4744.ParkourTopTen.Metrics.Metrics;
+
 
 public class ParkourTopTen extends JavaPlugin {
     private ParkourTopTenCommand commandListener;
+    private String version;
 
     @Override
     public void onEnable() {
@@ -23,13 +27,22 @@ public class ParkourTopTen extends JavaPlugin {
             pm.disablePlugin(this);
             
         } else {
-            getLogger().info(pkr.getDescription().getVersion());
+            getLogger().info("Found Parkour version " + pkr.getDescription().getVersion());
             // Load config
             saveDefaultConfig();
             
             // Register command
             commandListener = new ParkourTopTenCommand(this);
             getCommand("parkourtopten").setExecutor(commandListener);
+            
+            version = this.getDescription().getVersion();
+            
+            // check for new version
+            checkForUpdate();
+            
+            // Metrics
+            @SuppressWarnings("unused")
+			Metrics metrics = new Metrics(this);
             
             // Load from config
             getServer().getScheduler().runTaskLater(this, new Runnable() {
@@ -85,5 +98,23 @@ public class ParkourTopTen extends JavaPlugin {
             }
         }
     }
+    
+	public void checkForUpdate() {
+		if(!getConfig().getBoolean("Check_For_Update", true)){
+			return;
+		}
+		Bukkit.getScheduler().runTaskLaterAsynchronously(this, new Runnable() {
+			public void run() {
+				String latestVersion = VersionChecker.getVersion();
+				if (latestVersion == "error") {
+					getLogger().info("Error attempting to check for new version. Please report it here: https://www.spigotmc.org/threads/parkour-top-ten.268403/");
+				} else {
+					if (!version.equals(latestVersion)) {
+						getLogger().info("New version " + latestVersion + " available on Spigot: https://www.spigotmc.org/resources/parkour-top-ten.46268/");
+					}
+				}
+			}
+		}, 50L);
+	}
 
 }
