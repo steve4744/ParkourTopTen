@@ -64,7 +64,7 @@ public class CourseListener implements Listener {
         
         for (i = 0; i < topten.size(); ) {
             String name = topten.get(i).getPlayer(); 
-            String time = Utils.calculateTime(topten.get(i).getTime());
+            String time = Utils.displayCurrentTime(topten.get(i).getTime());
             i++;
             //plugin.getLogger().info("DEBUG: [dTT] " + i);
             //plugin.getLogger().info("DEBUG: [dTT] " + name);
