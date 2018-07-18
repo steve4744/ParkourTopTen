@@ -3,12 +3,12 @@ package io.github.steve4744.ParkourTopTen;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import io.github.steve4744.ParkourTopTen.Metrics.Metrics;
 
@@ -45,11 +45,12 @@ public class ParkourTopTen extends JavaPlugin {
 			Metrics metrics = new Metrics(this);
             
             // Load from config
-            getServer().getScheduler().runTaskLater(this, new Runnable() {
-
-                public void run() {
+            new BukkitRunnable() {
+                @Override
+            	public void run() {
                     reload();	
-                }}, 20L);
+                }
+            }.runTaskLater(this, 20L);
         }
     }
 
@@ -103,7 +104,8 @@ public class ParkourTopTen extends JavaPlugin {
 		if(!getConfig().getBoolean("Check_For_Update", true)){
 			return;
 		}
-		Bukkit.getScheduler().runTaskLaterAsynchronously(this, new Runnable() {
+		new BukkitRunnable() {
+			@Override
 			public void run() {
 				String latestVersion = VersionChecker.getVersion();
 				if (latestVersion == "error") {
@@ -114,7 +116,7 @@ public class ParkourTopTen extends JavaPlugin {
 					}
 				}
 			}
-		}, 50L);
+		}.runTaskLaterAsynchronously(this, 50L);
 	}
 
 }

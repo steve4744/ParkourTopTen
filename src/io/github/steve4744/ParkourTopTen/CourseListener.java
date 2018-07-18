@@ -5,7 +5,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.SkullType;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
@@ -13,7 +12,6 @@ import org.bukkit.block.Skull;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-
 import me.A5H73Y.Parkour.Events.PlayerFinishCourseEvent;
 import me.A5H73Y.Parkour.Other.TimeObject;
 import me.A5H73Y.Parkour.Utilities.DatabaseMethods;
@@ -72,13 +70,15 @@ public class CourseListener implements Listener {
             
             // Get the block and move
             BlockFace directionFacing;
-            if (b.getType() == Material.WALL_SIGN || b.getType() == Material.SIGN_POST) {
+            if (b.getType() == Material.WALL_SIGN || b.getType() == Material.SIGN) {
                 Sign sign = (Sign)b.getState();
                 org.bukkit.material.Sign s = (org.bukkit.material.Sign) sign.getData();
                 directionFacing = s.getFacing();
                 sign.setLine(0, "#" + i);
 
-                OfflinePlayer player = Bukkit.getOfflinePlayer(name);
+                //TODO if/when Parkour implements uuids then this can be simplified
+                OfflinePlayer player = Bukkit.getOfflinePlayer(Bukkit.getOfflinePlayer(name).getUniqueId());
+                Bukkit.getLogger().info("player = " + player);
                 sign.setLine(1, name);
                 sign.setLine(2, "Time: " + time);
                 sign.setLine(3, courseName);
@@ -87,20 +87,18 @@ public class CourseListener implements Listener {
                 // Place head
                 BlockFace opp = directionFacing.getOppositeFace();
                 Block attachToBlock = b.getRelative(BlockFace.UP).getRelative(opp);
-                // Check if its already a SKULL - allows heads to sit directly on the block
-                if (attachToBlock.getType() != Material.SKULL) {
-                	attachToBlock.setType(Material.SKULL);
+                // Check if its already a SKULL - allows heads to sit directly on the block (only relevant to pre-1.13)
+                if (attachToBlock.getType() != Material.PLAYER_HEAD) {
+                	attachToBlock.setType(Material.PLAYER_HEAD);
                 }
-                
+               
                 Skull skull = (Skull)attachToBlock.getState();
-                skull.setRotation(directionFacing);
-                skull.setSkullType(SkullType.PLAYER);
-                if (Bukkit.getVersion().contains("1.9") || Bukkit.getVersion().contains("1.8")) {
-                	skull.setOwner(name);
-                } else {
-                	skull.setOwningPlayer(player);
-                }
+                skull.setOwningPlayer(player);
+                
+                //skull.setRotation(directionFacing); //seems to have switched 180 degrees in 1.13
+                skull.setRotation(opp);
                 skull.update();
+                
             } else {
             	// if there's no more signs then stop
             	return;
@@ -116,7 +114,7 @@ public class CourseListener implements Listener {
         if (i < 10) {
             for (int j = i+1; j < 11; j++) {
                 BlockFace directionFacing;
-                if (b.getType() == Material.WALL_SIGN || b.getType() == Material.SIGN_POST) {
+                if (b.getType() == Material.WALL_SIGN || b.getType() == Material.SIGN) {
                     Sign sign = (Sign)b.getState();
                     org.bukkit.material.Sign s = (org.bukkit.material.Sign) sign.getData();
                     directionFacing = s.getFacing();
@@ -143,7 +141,7 @@ public class CourseListener implements Listener {
         Block b = topTenLocation.getBlock();
         for (int j = 0; j < 10; j++) {
             BlockFace directionFacing;
-            if (b.getType() == Material.WALL_SIGN || b.getType() == Material.SIGN_POST) {
+            if (b.getType() == Material.WALL_SIGN || b.getType() == Material.SIGN) {
                 Sign sign = (Sign)b.getState();
                 org.bukkit.material.Sign s = (org.bukkit.material.Sign) sign.getData();
                 directionFacing = s.getFacing();

@@ -64,7 +64,7 @@ public class ParkourTopTenCommand implements CommandExecutor {
                 	break;
                 }
                 //plugin.getLogger().info("DEBUG: " + lastBlock);
-                if (lastBlock.getType() != Material.WALL_SIGN && lastBlock.getType() != Material.SIGN_POST) {
+                if (lastBlock.getType() != Material.WALL_SIGN && lastBlock.getType() != Material.SIGN) {
                 	sender.sendMessage(ChatColor.RED + "You must be looking at a sign to start");
                 	return true;
                 }
@@ -145,7 +145,7 @@ public class ParkourTopTenCommand implements CommandExecutor {
             		break;
             	}
             	//plugin.getLogger().info("DEBUG: " + lastBlock);
-            	if (lastBlock.getType() != Material.WALL_SIGN && lastBlock.getType() != Material.SIGN_POST) {
+            	if (lastBlock.getType() != Material.WALL_SIGN && lastBlock.getType() != Material.SIGN) {
             		sender.sendMessage(ChatColor.RED + "You must be looking at the #1 top ten sign");
             		return true;
             	}
