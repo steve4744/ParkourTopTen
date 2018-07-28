@@ -46,11 +46,11 @@ public class ParkourTopTenCommand implements CommandExecutor {
             // Create a top ten display
             if (arg3[0].equalsIgnoreCase("create")) {
             	if (arg3.length == 1) {
-            		sender.sendMessage(ChatColor.RED + "You must specify a Parkour course to display");
+            		player.sendMessage(ChatColor.RED + "You must specify a Parkour course to display");
             		return true;
             	}
                 if (!CourseMethods.exist(arg3[1])) {
-                	sender.sendMessage(ChatColor.RED + "Parkour course " + ChatColor.AQUA + arg3[1] + ChatColor.RED + " does not exist");
+                	player.sendMessage(ChatColor.RED + "Parkour course " + ChatColor.AQUA + arg3[1] + ChatColor.RED + " does not exist");
                 	return true;
                 }
             
@@ -65,7 +65,7 @@ public class ParkourTopTenCommand implements CommandExecutor {
                 }
                 //plugin.getLogger().info("DEBUG: " + lastBlock);
                 if (lastBlock.getType() != Material.WALL_SIGN && lastBlock.getType() != Material.SIGN) {
-                	sender.sendMessage(ChatColor.RED + "You must be looking at a sign to start");
+                	player.sendMessage(ChatColor.RED + "You must be looking at a sign to start");
                 	return true;
                 }
             
@@ -93,7 +93,7 @@ public class ParkourTopTenCommand implements CommandExecutor {
 
                 }
                 if (right == null) {
-                	sender.sendMessage(ChatColor.RED + "Sign needs to face north, south, east or west");
+                	player.sendMessage(ChatColor.RED + "Sign needs to face north, south, east or west");
                 	return true; 
                 }
             
@@ -101,7 +101,7 @@ public class ParkourTopTenCommand implements CommandExecutor {
                 for (CourseListener panel : topTen) {
                 	if (panel.getTopTenLocation().equals(lastBlock.getLocation())) {
                 		panel.setDirection(right);
-                		sender.sendMessage(ChatColor.RED + "ParkourTopTen display is already active");
+                		player.sendMessage(ChatColor.RED + "ParkourTopTen display is already active");
                 		return true;
                 	}
                 }
@@ -109,18 +109,18 @@ public class ParkourTopTenCommand implements CommandExecutor {
                 CourseListener newTopTen = new CourseListener(plugin, lastBlock.getLocation(), right, arg3[1]);
                 topTen.add(newTopTen);
                 plugin.getServer().getPluginManager().registerEvents(newTopTen, plugin);
-                sender.sendMessage(ChatColor.GREEN + "ParkourTopTen heads created for course " + ChatColor.AQUA + arg3[1]);
+                player.sendMessage(ChatColor.GREEN + "ParkourTopTen heads created for course " + ChatColor.AQUA + arg3[1]);
                 return true;
             
             } else if (arg3[0].equalsIgnoreCase("remove")) {
             	if (arg3.length == 2 && arg3[1].equalsIgnoreCase("all")) {
             		if (topTen.size() == 0) {
-            			sender.sendMessage(ChatColor.RED + "There are no active ParkourTopTen displays");
+            			player.sendMessage(ChatColor.RED + "There are no active ParkourTopTen displays");
             			return true;
             		} else if (topTen.size() == 1) {
-            			sender.sendMessage(ChatColor.GREEN + "Removing " + topTen.size() + " ParkourTopTen display");
+            			player.sendMessage(ChatColor.GREEN + "Removing " + topTen.size() + " ParkourTopTen display");
             		} else {
-            			sender.sendMessage(ChatColor.GREEN + "Removing " + topTen.size() + " ParkourTopTen displays");
+            			player.sendMessage(ChatColor.GREEN + "Removing " + topTen.size() + " ParkourTopTen displays");
             		}
             		for (CourseListener panel : topTen) {
             			// Clear each panel
@@ -146,7 +146,7 @@ public class ParkourTopTenCommand implements CommandExecutor {
             	}
             	//plugin.getLogger().info("DEBUG: " + lastBlock);
             	if (lastBlock.getType() != Material.WALL_SIGN && lastBlock.getType() != Material.SIGN) {
-            		sender.sendMessage(ChatColor.RED + "You must be looking at the #1 top ten sign");
+            		player.sendMessage(ChatColor.RED + "You must be looking at the #1 top ten sign");
             		return true;
             	}
             	// Check if this panel  exists
@@ -156,14 +156,14 @@ public class ParkourTopTenCommand implements CommandExecutor {
             			panel.removeTopTen();
             			// Remove from the list
             			topTen.remove(panel);
-            			sender.sendMessage(ChatColor.GREEN + "ParkourTopTen display removed");
+            			player.sendMessage(ChatColor.GREEN + "ParkourTopTen display removed");
             			return true;
             		}
             	}
-            	sender.sendMessage(ChatColor.RED + "Could not find a ParkourTopTen display in that position");
+            	player.sendMessage(ChatColor.RED + "Could not find a ParkourTopTen display in that position");
             	return true;
             } else {
-            	sender.sendMessage(ChatColor.RED + "Not a valid ParkourTopTen command");
+            	player.sendMessage(ChatColor.RED + "Not a valid ParkourTopTen command");
             	return true;
             }
         }
@@ -171,18 +171,14 @@ public class ParkourTopTenCommand implements CommandExecutor {
     }
     
     public void sendHelp(Player player) {
-    	//player.sendMessage(ChatColor.WHITE + " ==================");
     	player.sendMessage(ChatColor.WHITE + " === " + ChatColor.YELLOW + "ParkourTopTen Help " + ChatColor.WHITE + "===");
-    	//player.sendMessage(ChatColor.WHITE + " ==================");
         player.sendMessage(ChatColor.AQUA + "To create a top ten display for a course:");
         player.sendMessage(ChatColor.AQUA + "  : build a row of signs");
         player.sendMessage(ChatColor.AQUA + "  : look at the left-most sign and type the create command");
-        //player.sendMessage("");
         player.sendMessage(ChatColor.WHITE + "  /ptt create [course] " + ChatColor.AQUA + "- specifying a valid Parkour course");
         player.sendMessage("");
         player.sendMessage(ChatColor.AQUA + "To remove a top ten display for a course:");
         player.sendMessage(ChatColor.AQUA + "  : look at the left-most sign and type the remove command");
-        //player.sendMessage("");
         player.sendMessage(ChatColor.WHITE + "  /ptt remove " + ChatColor.AQUA + "- remove a ParkourTopTen display");
         player.sendMessage(ChatColor.WHITE + "  /ptt remove all " + ChatColor.AQUA + "- remove ALL ParkourTopTen displays"); 
     	return;

@@ -41,8 +41,7 @@ public class ParkourTopTen extends JavaPlugin {
             checkForUpdate();
             
             // Metrics
-            @SuppressWarnings("unused")
-			Metrics metrics = new Metrics(this);
+			new Metrics(this);
             
             // Load from config
             new BukkitRunnable() {

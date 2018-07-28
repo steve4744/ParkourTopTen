@@ -9,6 +9,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.block.Skull;
+import org.bukkit.block.data.Rotatable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -78,7 +79,6 @@ public class CourseListener implements Listener {
 
                 //TODO if/when Parkour implements uuids then this can be simplified
                 OfflinePlayer player = Bukkit.getOfflinePlayer(Bukkit.getOfflinePlayer(name).getUniqueId());
-                Bukkit.getLogger().info("player = " + player);
                 sign.setLine(1, name);
                 sign.setLine(2, "Time: " + time);
                 sign.setLine(3, courseName);
@@ -86,17 +86,22 @@ public class CourseListener implements Listener {
                 
                 // Place head
                 BlockFace opp = directionFacing.getOppositeFace();
+                
+                // Get the block above the block that the sign is attached to
                 Block attachToBlock = b.getRelative(BlockFace.UP).getRelative(opp);
-                // Check if its already a SKULL - allows heads to sit directly on the block (only relevant to pre-1.13)
+                
+                // Check if its already a SKULL
                 if (attachToBlock.getType() != Material.PLAYER_HEAD) {
                 	attachToBlock.setType(Material.PLAYER_HEAD);
                 }
-               
+                // Set the rotation
+                Rotatable skullData = (Rotatable)Material.PLAYER_HEAD.createBlockData();
+                skullData.setRotation(opp);
+                attachToBlock.setBlockData(skullData);
+                
+                // Set the owner
                 Skull skull = (Skull)attachToBlock.getState();
                 skull.setOwningPlayer(player);
-                
-                //skull.setRotation(directionFacing); //seems to have switched 180 degrees in 1.13
-                skull.setRotation(opp);
                 skull.update();
                 
             } else {
@@ -124,7 +129,7 @@ public class CourseListener implements Listener {
                     sign.setLine(3, "");
                     sign.update();
                     
-                    // Place head
+                    // Remove head
                     BlockFace opp = directionFacing.getOppositeFace();
                     Block attachToBlock = b.getRelative(BlockFace.UP).getRelative(opp);
                     attachToBlock.setType(Material.AIR);
@@ -151,7 +156,7 @@ public class CourseListener implements Listener {
                 sign.setLine(3, "");
                 sign.update();
                 
-                // Place head
+                // Remove head
                 BlockFace opp = directionFacing.getOppositeFace();
                 Block attachToBlock = b.getRelative(BlockFace.UP).getRelative(opp);
                 attachToBlock.setType(Material.AIR);
