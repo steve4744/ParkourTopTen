@@ -59,7 +59,7 @@ public class ParkourTopTenCommand implements CommandExecutor {
                 Block lastBlock = iter.next();
                 while (iter.hasNext()) {
                 	lastBlock = iter.next();
-                	if (lastBlock.getType() == Material.AIR)
+                	if (Util.isAir(lastBlock.getType()))
                 		continue;
                 	break;
                 }
@@ -140,7 +140,7 @@ public class ParkourTopTenCommand implements CommandExecutor {
             	Block lastBlock = iter.next();
             	while (iter.hasNext()) {
             		lastBlock = iter.next();
-            		if (lastBlock.getType() == Material.AIR)
+            		if (Util.isAir(lastBlock.getType()))
             			continue;
             		break;
             	}
