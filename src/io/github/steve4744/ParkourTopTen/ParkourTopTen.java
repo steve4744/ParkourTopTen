@@ -34,6 +34,7 @@ public class ParkourTopTen extends JavaPlugin {
             // Register command
             commandListener = new ParkourTopTenCommand(this);
             getCommand("parkourtopten").setExecutor(commandListener);
+            getCommand("parkourtopten").setTabCompleter(new AutoTabCompleter());
             
             version = this.getDescription().getVersion();
             
