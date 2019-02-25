@@ -42,7 +42,7 @@ public class Util {
 	    final float pitch = Float.intBitsToFloat(Integer.parseInt(parts[5]));
 	    return new Location(w, x, y, z, yaw, pitch);
 	}
-	
+
 	return null;
     }
 
@@ -61,7 +61,7 @@ public class Util {
     	}
     	return l.getWorld().getName() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ() + ":" + Float.floatToIntBits(l.getYaw()) + ":" + Float.floatToIntBits(l.getPitch());
     }
-    
+
     /**
      * Beginning MC1.13 there is more than 1 type of AIR
      * 

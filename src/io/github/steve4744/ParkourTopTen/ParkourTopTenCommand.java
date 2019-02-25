@@ -18,13 +18,16 @@ import me.A5H73Y.Parkour.Course.CourseMethods;
 
 
 public class ParkourTopTenCommand implements CommandExecutor {
-    private ParkourTopTen plugin;
+    private final ParkourTopTen plugin;
+	private final String version;
     private List<CourseListener> topTen;
     /**
      * @param plugin
+     * @param version
      */
-    public ParkourTopTenCommand(ParkourTopTen plugin) {
+    public ParkourTopTenCommand(ParkourTopTen plugin, String version) {
         this.plugin = plugin;
+        this.version = version;
         topTen = new ArrayList<CourseListener>();
     }
 
@@ -34,142 +37,145 @@ public class ParkourTopTenCommand implements CommandExecutor {
             return true;
         }
         Player player = (Player)sender;
+
+        if (arg3.length > 0 && arg3[0].equalsIgnoreCase("info")) {
+        	player.sendMessage(ChatColor.GREEN + "[ParkourTopTen] " + ChatColor.WHITE + "Version " + version + " : plugin by "+ ChatColor.AQUA + "steve4744");
+        	return true;
+        }
         if (!player.isOp() && !player.hasPermission("parkourtopten.admin")) {
             sender.sendMessage(ChatColor.RED + "You must be OP or have parkourtopten.admin permission to use this command");
             return true;
         }
-        if (command.getName().equalsIgnoreCase("parkourtopten")) {
-            if (arg3.length == 0 || arg3[0].equalsIgnoreCase("help")){
-                sendHelp(player);
+        if (arg3.length == 0 || arg3[0].equalsIgnoreCase("help")){
+            sendHelp(player);
+            return true;
+        }
+        // Create a top ten display
+        if (arg3[0].equalsIgnoreCase("create")) {
+        	if (arg3.length == 1) {
+            	player.sendMessage(ChatColor.RED + "You must specify a Parkour course to display");
+            	return true;
+            }
+            if (!CourseMethods.exist(arg3[1])) {
+                player.sendMessage(ChatColor.RED + "Parkour course " + ChatColor.AQUA + arg3[1] + ChatColor.RED + " does not exist");
                 return true;
             }
-            // Create a top ten display
-            if (arg3[0].equalsIgnoreCase("create")) {
-            	if (arg3.length == 1) {
-            		player.sendMessage(ChatColor.RED + "You must specify a Parkour course to display");
-            		return true;
-            	}
-                if (!CourseMethods.exist(arg3[1])) {
-                	player.sendMessage(ChatColor.RED + "Parkour course " + ChatColor.AQUA + arg3[1] + ChatColor.RED + " does not exist");
-                	return true;
-                }
-            
-                // Get the block that the player is looking at
-                BlockIterator iter = new BlockIterator(player, 10);
-                Block lastBlock = iter.next();
-                while (iter.hasNext()) {
-                	lastBlock = iter.next();
-                	if (Util.isAir(lastBlock.getType()))
-                		continue;
-                	break;
-                }
-                //plugin.getLogger().info("DEBUG: " + lastBlock);
-                if (lastBlock.getType() != Material.WALL_SIGN && lastBlock.getType() != Material.SIGN) {
-                	player.sendMessage(ChatColor.RED + "You must be looking at a sign to start");
-                	return true;
-                }
-            
-                // Get the direction that the sign is facing
-                Sign sign = (Sign)lastBlock.getState().getData();
-                BlockFace facing = sign.getFacing();
-                BlockFace right = null;
-            
-                // Get the direction to the right
-                switch (facing) {
-                case EAST:
-                	right = BlockFace.NORTH;
-                	break;
-                case NORTH:
-                	right = BlockFace.WEST;
-                	break;
-                case SOUTH:
-                	right = BlockFace.EAST;
-                	break;
-                case WEST:
-                	right = BlockFace.SOUTH;
-                	break;
-                default:
-                	break;
 
-                }
-                if (right == null) {
-                	player.sendMessage(ChatColor.RED + "Sign needs to face north, south, east or west");
-                	return true; 
-                }
-            
-                // Check if this panel already exists
-                for (CourseListener panel : topTen) {
-                	if (panel.getTopTenLocation().equals(lastBlock.getLocation())) {
-                		panel.setDirection(right);
-                		player.sendMessage(ChatColor.RED + "ParkourTopTen display is already active");
-                		return true;
-                	}
-                }
-            
-                CourseListener newTopTen = new CourseListener(plugin, lastBlock.getLocation(), right, arg3[1]);
-                topTen.add(newTopTen);
-                plugin.getServer().getPluginManager().registerEvents(newTopTen, plugin);
-                player.sendMessage(ChatColor.GREEN + "ParkourTopTen heads created for course " + ChatColor.AQUA + arg3[1]);
+            // Get the block that the player is looking at
+            BlockIterator iter = new BlockIterator(player, 10);
+            Block lastBlock = iter.next();
+            while (iter.hasNext()) {
+            	lastBlock = iter.next();
+                if (Util.isAir(lastBlock.getType()))
+                	continue;
+                break;
+            }
+            //plugin.getLogger().info("DEBUG: " + lastBlock);
+            if (lastBlock.getType() != Material.WALL_SIGN && lastBlock.getType() != Material.SIGN) {
+                player.sendMessage(ChatColor.RED + "You must be looking at a sign to start");
                 return true;
-            
-            } else if (arg3[0].equalsIgnoreCase("remove")) {
-            	if (arg3.length == 2 && arg3[1].equalsIgnoreCase("all")) {
-            		if (topTen.size() == 0) {
-            			player.sendMessage(ChatColor.RED + "There are no active ParkourTopTen displays");
-            			return true;
-            		} else if (topTen.size() == 1) {
-            			player.sendMessage(ChatColor.GREEN + "Removing " + topTen.size() + " ParkourTopTen display");
-            		} else {
-            			player.sendMessage(ChatColor.GREEN + "Removing " + topTen.size() + " ParkourTopTen displays");
-            		}
-            		for (CourseListener panel : topTen) {
-            			// Clear each panel
-            			panel.removeTopTen();
-            		}
-            		// Remove all from the list
-            		topTen.removeAll(topTen);
+            }
+
+            // Get the direction that the sign is facing
+            Sign sign = (Sign)lastBlock.getState().getData();
+            BlockFace facing = sign.getFacing();
+            BlockFace right = null;
+
+            // Get the direction to the right
+            switch (facing) {
+            case EAST:
+                right = BlockFace.NORTH;
+                break;
+            case NORTH:
+                right = BlockFace.WEST;
+                break;
+            case SOUTH:
+                right = BlockFace.EAST;
+                break;
+            case WEST:
+                right = BlockFace.SOUTH;
+                break;
+            default:
+                break;
+            }
+            if (right == null) {
+                player.sendMessage(ChatColor.RED + "Sign needs to face north, south, east or west");
+                return true; 
+            }
+
+            // Check if this panel already exists
+            for (CourseListener panel : topTen) {
+            	if (panel.getTopTenLocation().equals(lastBlock.getLocation())) {
+                	panel.setDirection(right);
+                	player.sendMessage(ChatColor.RED + "ParkourTopTen display is already active");
+                	return true;
+                }
+            }
+
+            CourseListener newTopTen = new CourseListener(plugin, lastBlock.getLocation(), right, arg3[1]);
+            topTen.add(newTopTen);
+            plugin.getServer().getPluginManager().registerEvents(newTopTen, plugin);
+            player.sendMessage(ChatColor.GREEN + "ParkourTopTen heads created for course " + ChatColor.AQUA + arg3[1]);
+            return true;
+
+        } else if (arg3[0].equalsIgnoreCase("remove")) {
+            if (arg3.length == 2 && arg3[1].equalsIgnoreCase("all")) {
+            	if (topTen.size() == 0) {
+            		player.sendMessage(ChatColor.RED + "There are no active ParkourTopTen displays");
             		return true;
+            	} else if (topTen.size() == 1) {
+            		player.sendMessage(ChatColor.GREEN + "Removing " + topTen.size() + " ParkourTopTen display");
+            	} else {
+            		player.sendMessage(ChatColor.GREEN + "Removing " + topTen.size() + " ParkourTopTen displays");
             	}
-            	if (arg3.length == 2 && arg3[1].equalsIgnoreCase("help")) {
-            		sendHelp(player);
-            		return true;
-            	} 
-            
-            	// Look at what the player was looking at
-            	BlockIterator iter = new BlockIterator(player, 10);
-            	Block lastBlock = iter.next();
-            	while (iter.hasNext()) {
-            		lastBlock = iter.next();
-            		if (Util.isAir(lastBlock.getType()))
-            			continue;
-            		break;
-            	}
-            	//plugin.getLogger().info("DEBUG: " + lastBlock);
-            	if (lastBlock.getType() != Material.WALL_SIGN && lastBlock.getType() != Material.SIGN) {
-            		player.sendMessage(ChatColor.RED + "You must be looking at the #1 top ten sign");
-            		return true;
-            	}
-            	// Check if this panel  exists
             	for (CourseListener panel : topTen) {
-            		if (panel.getTopTenLocation().equals(lastBlock.getLocation())) {
-            			// Clear
-            			panel.removeTopTen();
-            			// Remove from the list
-            			topTen.remove(panel);
-            			player.sendMessage(ChatColor.GREEN + "ParkourTopTen display removed");
-            			return true;
-            		}
+            		// Clear each panel
+            		panel.removeTopTen();
             	}
-            	player.sendMessage(ChatColor.RED + "Could not find a ParkourTopTen display in that position");
-            	return true;
-            } else {
-            	player.sendMessage(ChatColor.RED + "Not a valid ParkourTopTen command");
+            	// Remove all from the list
+            	topTen.removeAll(topTen);
             	return true;
             }
+            if (arg3.length == 2 && arg3[1].equalsIgnoreCase("help")) {
+            	sendHelp(player);
+            	return true;
+            } 
+
+            // Look at what the player was looking at
+            BlockIterator iter = new BlockIterator(player, 10);
+            Block lastBlock = iter.next();
+            while (iter.hasNext()) {
+            	lastBlock = iter.next();
+            	if (Util.isAir(lastBlock.getType()))
+            		continue;
+            	break;
+            }
+            //plugin.getLogger().info("DEBUG: " + lastBlock);
+            if (lastBlock.getType() != Material.WALL_SIGN && lastBlock.getType() != Material.SIGN) {
+            	player.sendMessage(ChatColor.RED + "You must be looking at the #1 top ten sign");
+            	return true;
+            }
+            // Check if this panel  exists
+            for (CourseListener panel : topTen) {
+            	if (panel.getTopTenLocation().equals(lastBlock.getLocation())) {
+            		// Clear
+            		panel.removeTopTen();
+            		// Remove from the list
+            		topTen.remove(panel);
+            		player.sendMessage(ChatColor.GREEN + "ParkourTopTen display removed");
+            		return true;
+            	}
+            }
+            player.sendMessage(ChatColor.RED + "Could not find a ParkourTopTen display in that position");
+            return true;
+ 
+        } else if (arg3[0].equalsIgnoreCase("info")) {
+            player.sendMessage(ChatColor.RED + "Not a valid ParkourTopTen command");
+            return true;
         }
 		return false;
     }
-    
+
     public void sendHelp(Player player) {
     	player.sendMessage(ChatColor.WHITE + " === " + ChatColor.YELLOW + "ParkourTopTen Help " + ChatColor.WHITE + "===");
         player.sendMessage(ChatColor.AQUA + "To create a top ten display for a course:");

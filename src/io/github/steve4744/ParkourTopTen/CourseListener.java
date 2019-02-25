@@ -39,7 +39,7 @@ public class CourseListener implements Listener {
         this.courseName = courseName;
         displayTopTen();
     }
-    
+
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onCourseCompletion(PlayerFinishCourseEvent event) {
     	String coursecompleted = event.getCourseName();
@@ -55,12 +55,12 @@ public class CourseListener implements Listener {
             return;
         }
         // Get the top 10 times for the course
-        List<TimeObject> topten = DatabaseMethods.getTopCourseResults(courseName, 10);
-        
+        List<TimeObject> topten = DatabaseMethods.getTopCourseResults(courseName.toLowerCase(), 10);
+
         // Display the top ten heads
         int i = 0;
         Block b = topTenLocation.getBlock();
-        
+
         for (i = 0; i < topten.size(); ) {
             String name = topten.get(i).getPlayer(); 
             String time = Utils.displayCurrentTime(topten.get(i).getTime());
@@ -68,7 +68,7 @@ public class CourseListener implements Listener {
             //plugin.getLogger().info("DEBUG: [dTT] " + i);
             //plugin.getLogger().info("DEBUG: [dTT] " + name);
             //plugin.getLogger().info("DEBUG: [dTT] " + time);
-            
+
             // Get the block and move
             BlockFace directionFacing;
             if (b.getType() == Material.WALL_SIGN || b.getType() == Material.SIGN) {
@@ -83,13 +83,13 @@ public class CourseListener implements Listener {
                 sign.setLine(2, "Time: " + time);
                 sign.setLine(3, courseName);
                 sign.update();
-                
+
                 // Place head
                 BlockFace opp = directionFacing.getOppositeFace();
-                
+
                 // Get the block above the block that the sign is attached to
                 Block attachToBlock = b.getRelative(BlockFace.UP).getRelative(opp);
-                
+
                 // Check if its already a SKULL
                 if (attachToBlock.getType() != Material.PLAYER_HEAD) {
                 	attachToBlock.setType(Material.PLAYER_HEAD);
@@ -98,12 +98,12 @@ public class CourseListener implements Listener {
                 Rotatable skullData = (Rotatable)Material.PLAYER_HEAD.createBlockData();
                 skullData.setRotation(opp);
                 attachToBlock.setBlockData(skullData);
-                
+
                 // Set the owner
                 Skull skull = (Skull)attachToBlock.getState();
                 skull.setOwningPlayer(player);
                 skull.update();
-                
+
             } else {
             	// if there's no more signs then stop
             	return;
@@ -128,7 +128,7 @@ public class CourseListener implements Listener {
                     sign.setLine(2, "");
                     sign.setLine(3, "");
                     sign.update();
-                    
+
                     // Remove head
                     BlockFace opp = directionFacing.getOppositeFace();
                     Block attachToBlock = b.getRelative(BlockFace.UP).getRelative(opp);
@@ -155,7 +155,7 @@ public class CourseListener implements Listener {
                 sign.setLine(2, "");
                 sign.setLine(3, "");
                 sign.update();
-                
+
                 // Remove head
                 BlockFace opp = directionFacing.getOppositeFace();
                 Block attachToBlock = b.getRelative(BlockFace.UP).getRelative(opp);
@@ -180,7 +180,7 @@ public class CourseListener implements Listener {
     public BlockFace getDirection() {
         return direction;
     }
-    
+
     /**
      * @return the course name
      */
@@ -201,12 +201,12 @@ public class CourseListener implements Listener {
     public void setDirection(BlockFace direction) {
         this.direction = direction;
     }
-    
+
     /**
      * @param course name to set
      */
     public void setCourseName(String courseName) {
         this.courseName = courseName;
     }
- 
+
 }

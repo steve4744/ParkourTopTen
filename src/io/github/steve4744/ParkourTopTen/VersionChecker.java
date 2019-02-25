@@ -8,7 +8,7 @@ import java.net.URL;
 import org.bukkit.Bukkit;
 
 public class VersionChecker {
-	
+
 	public static String getVersion(){
 		try {
 			HttpURLConnection con = (HttpURLConnection) new URL("https://www.spigotmc.org/api/general.php").openConnection();

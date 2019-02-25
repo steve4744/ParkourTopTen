@@ -8,22 +8,31 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
+import me.A5H73Y.Parkour.Course.CourseInfo;
+
 public class AutoTabCompleter implements TabCompleter {
-	
+
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command cmd, String alias, String[] args) {
 		if (!(sender instanceof Player)) {
 			return null;
 		}
 		Player player = (Player) sender;
-		
+
 		List<String> list = new ArrayList<String>();
 		List<String> auto = new ArrayList<String>();
-		
-		if (args.length == 1 && player.hasPermission("parkourtopten.admin")) {
-			list.add("help");
-			list.add("create");
-			list.add("remove");
+
+		if (args.length == 1) {
+			list.add("info");
+			if (player.hasPermission("parkourtopten.admin")) {
+				list.add("help");
+				list.add("create");
+				list.add("remove");
+			}
+		} else if (args.length == 2 && player.hasPermission("parkourtopten.admin")) {
+			if (args[0].equalsIgnoreCase("create")) {
+				list.addAll(CourseInfo.getAllCourses());
+			}
 		}
 		for (String s : list) {
 			if (s.startsWith(args[args.length - 1])) {
