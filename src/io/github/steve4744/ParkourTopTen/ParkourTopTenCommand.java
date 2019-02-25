@@ -19,7 +19,7 @@ import me.A5H73Y.Parkour.Course.CourseMethods;
 
 public class ParkourTopTenCommand implements CommandExecutor {
     private final ParkourTopTen plugin;
-	private final String version;
+    private final String version;
     private List<CourseListener> topTen;
     /**
      * @param plugin
