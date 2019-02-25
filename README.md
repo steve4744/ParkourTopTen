@@ -1,4 +1,4 @@
-![alt text](https://www.spigotmc.org/attachments/2017-08-24_00-20-35-png.274565/ "Parkour Top Ten")
+![alt text](https://www.spigotmc.org/attachments/2019-02-25_11-50-03-png.407332/ "Parkour Top Ten")
 
 # Parkour Top Ten
 
