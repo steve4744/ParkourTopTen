@@ -69,7 +69,7 @@ public class ParkourTopTen extends JavaPlugin {
         saveConfig();
     }
 
-    public void reload() {
+    private void reload() {
         // Load any existing panels
         List<String> serialize = getConfig().getStringList("panels");
         for (String panel : serialize) {
@@ -99,7 +99,7 @@ public class ParkourTopTen extends JavaPlugin {
         }
     }
 
-	public void checkForUpdate() {
+	private void checkForUpdate() {
 		if(!getConfig().getBoolean("Check_For_Update", true)){
 			return;
 		}

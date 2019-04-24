@@ -72,7 +72,6 @@ public class CourseListener implements Listener {
             // Get the block and move
             BlockFace directionFacing;
             if (b.getState() instanceof Sign) {
-            //if (b.getType() == Material.WALL_SIGN || b.getType() == Material.SIGN) {
                 Sign sign = (Sign)b.getState();
                 org.bukkit.material.Sign s = (org.bukkit.material.Sign) sign.getData();
                 directionFacing = s.getFacing();
@@ -121,7 +120,6 @@ public class CourseListener implements Listener {
             for (int j = i+1; j < 11; j++) {
                 BlockFace directionFacing;
                 if (b.getState() instanceof Sign) {
-                //if (b.getType() == Material.WALL_SIGN || b.getType() == Material.SIGN) {
                     Sign sign = (Sign)b.getState();
                     org.bukkit.material.Sign s = (org.bukkit.material.Sign) sign.getData();
                     directionFacing = s.getFacing();
@@ -149,7 +147,6 @@ public class CourseListener implements Listener {
         for (int j = 0; j < 10; j++) {
             BlockFace directionFacing;
             if (b.getState() instanceof Sign) {
-            //if (b.getType() == Material.WALL_SIGN || b.getType() == Material.SIGN) {
                 Sign sign = (Sign)b.getState();
                 org.bukkit.material.Sign s = (org.bukkit.material.Sign) sign.getData();
                 directionFacing = s.getFacing();
@@ -203,13 +200,6 @@ public class CourseListener implements Listener {
      */
     public void setDirection(BlockFace direction) {
         this.direction = direction;
-    }
-
-    /**
-     * @param course name to set
-     */
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
     }
 
 }
