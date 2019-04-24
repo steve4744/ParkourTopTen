@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
@@ -71,7 +70,8 @@ public class ParkourTopTenCommand implements CommandExecutor {
                 break;
             }
             //plugin.getLogger().info("DEBUG: " + lastBlock);
-            if (lastBlock.getType() != Material.WALL_SIGN && lastBlock.getType() != Material.SIGN) {
+            if (lastBlock.getState() instanceof Sign) {
+            //if (lastBlock.getType() != Material.WALL_SIGN && lastBlock.getType() != Material.SIGN) {
                 player.sendMessage(ChatColor.RED + "You must be looking at a sign to start");
                 return true;
             }
@@ -151,7 +151,8 @@ public class ParkourTopTenCommand implements CommandExecutor {
             	break;
             }
             //plugin.getLogger().info("DEBUG: " + lastBlock);
-            if (lastBlock.getType() != Material.WALL_SIGN && lastBlock.getType() != Material.SIGN) {
+            if (lastBlock.getState() instanceof Sign) {
+            //if (lastBlock.getType() != Material.WALL_SIGN && lastBlock.getType() != Material.SIGN) {
             	player.sendMessage(ChatColor.RED + "You must be looking at the #1 top ten sign");
             	return true;
             }

@@ -71,7 +71,8 @@ public class CourseListener implements Listener {
 
             // Get the block and move
             BlockFace directionFacing;
-            if (b.getType() == Material.WALL_SIGN || b.getType() == Material.SIGN) {
+            if (b.getState() instanceof Sign) {
+            //if (b.getType() == Material.WALL_SIGN || b.getType() == Material.SIGN) {
                 Sign sign = (Sign)b.getState();
                 org.bukkit.material.Sign s = (org.bukkit.material.Sign) sign.getData();
                 directionFacing = s.getFacing();
@@ -119,7 +120,8 @@ public class CourseListener implements Listener {
         if (i < 10) {
             for (int j = i+1; j < 11; j++) {
                 BlockFace directionFacing;
-                if (b.getType() == Material.WALL_SIGN || b.getType() == Material.SIGN) {
+                if (b.getState() instanceof Sign) {
+                //if (b.getType() == Material.WALL_SIGN || b.getType() == Material.SIGN) {
                     Sign sign = (Sign)b.getState();
                     org.bukkit.material.Sign s = (org.bukkit.material.Sign) sign.getData();
                     directionFacing = s.getFacing();
@@ -146,7 +148,8 @@ public class CourseListener implements Listener {
         Block b = topTenLocation.getBlock();
         for (int j = 0; j < 10; j++) {
             BlockFace directionFacing;
-            if (b.getType() == Material.WALL_SIGN || b.getType() == Material.SIGN) {
+            if (b.getState() instanceof Sign) {
+            //if (b.getType() == Material.WALL_SIGN || b.getType() == Material.SIGN) {
                 Sign sign = (Sign)b.getState();
                 org.bukkit.material.Sign s = (org.bukkit.material.Sign) sign.getData();
                 directionFacing = s.getFacing();
