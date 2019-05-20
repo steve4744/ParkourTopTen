@@ -12,8 +12,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.util.BlockIterator;
-
 import me.A5H73Y.Parkour.Course.CourseMethods;
 
 
@@ -61,15 +59,8 @@ public class ParkourTopTenCommand implements CommandExecutor {
                 return true;
             }
 
-            // Get the block that the player is looking at
-            BlockIterator iter = new BlockIterator(player, 10);
-            Block lastBlock = iter.next();
-            while (iter.hasNext()) {
-            	lastBlock = iter.next();
-                if (Util.isAir(lastBlock.getType()))
-                	continue;
-                break;
-            }
+            Block lastBlock = plugin.getBlockHandler().getTargetedBlock(player);
+            
             //plugin.getLogger().info("DEBUG: " + lastBlock);
             if (!(lastBlock.getBlockData() instanceof WallSign) && !(lastBlock.getBlockData() instanceof Sign)) {
                 player.sendMessage(ChatColor.RED + "You must be looking at a sign to start");
@@ -139,15 +130,8 @@ public class ParkourTopTenCommand implements CommandExecutor {
             	return true;
             } 
 
-            // Look at what the player was looking at
-            BlockIterator iter = new BlockIterator(player, 10);
-            Block lastBlock = iter.next();
-            while (iter.hasNext()) {
-            	lastBlock = iter.next();
-            	if (Util.isAir(lastBlock.getType()))
-            		continue;
-            	break;
-            }
+            Block lastBlock = plugin.getBlockHandler().getTargetedBlock(player);
+
             if (!(lastBlock.getBlockData() instanceof WallSign) && !(lastBlock.getBlockData() instanceof Sign)) {
             	player.sendMessage(ChatColor.RED + "You must be looking at the #1 top ten sign");
             	return true;
