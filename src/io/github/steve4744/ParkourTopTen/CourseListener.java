@@ -73,7 +73,7 @@ public class CourseListener implements Listener {
             // Get the block and move
             BlockFace directionFacing = plugin.getBlockHandler().getFacingDirection(b);
 
-            if (b.getBlockData() instanceof WallSign || b.getState() instanceof Sign) {
+            if (b.getBlockData() instanceof WallSign || b.getBlockData() instanceof org.bukkit.block.data.type.Sign) {
                 Sign sign = (Sign)b.getState();
                 sign.setLine(0, "#" + i);
 
@@ -119,7 +119,7 @@ public class CourseListener implements Listener {
         if (i < 10) {
             for (int j = i+1; j < 11; j++) {
                 BlockFace directionFacing = plugin.getBlockHandler().getFacingDirection(b);
-                if (b.getBlockData() instanceof WallSign || b.getState() instanceof Sign) {
+                if (b.getBlockData() instanceof WallSign || b.getBlockData() instanceof org.bukkit.block.data.type.Sign) {
                     Sign sign = (Sign)b.getState();
                     sign.setLine(0, "#" + j);
                     sign.setLine(1, "");
@@ -144,7 +144,7 @@ public class CourseListener implements Listener {
         Block b = topTenLocation.getBlock();
         for (int j = 0; j < 10; j++) {
         	BlockFace directionFacing = plugin.getBlockHandler().getFacingDirection(b);
-            if (b.getBlockData() instanceof WallSign || b.getState() instanceof Sign) {
+            if (b.getBlockData() instanceof WallSign || b.getBlockData() instanceof org.bukkit.block.data.type.Sign) {
                 Sign sign = (Sign)b.getState();
                 sign.setLine(0, "");
                 sign.setLine(1, "");
