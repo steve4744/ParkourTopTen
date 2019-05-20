@@ -9,8 +9,8 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.block.Skull;
-import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Rotatable;
+import org.bukkit.block.data.type.WallSign;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -71,11 +71,10 @@ public class CourseListener implements Listener {
             //plugin.getLogger().info("DEBUG: [dTT] " + time);
 
             // Get the block and move
-            BlockFace directionFacing;
-            if (b.getState() instanceof Sign) {
+            BlockFace directionFacing = plugin.getBlockHandler().getFacingDirection(b);
+
+            if (b.getBlockData() instanceof WallSign || b.getState() instanceof Sign) {
                 Sign sign = (Sign)b.getState();
-                Directional dir = (Directional)b.getBlockData();
-                directionFacing = dir.getFacing();
                 sign.setLine(0, "#" + i);
 
                 //TODO if/when Parkour implements uuids then this can be simplified
@@ -119,11 +118,9 @@ public class CourseListener implements Listener {
         // Less than 10 in the top ten
         if (i < 10) {
             for (int j = i+1; j < 11; j++) {
-                BlockFace directionFacing;
-                if (b.getState() instanceof Sign) {
+                BlockFace directionFacing = plugin.getBlockHandler().getFacingDirection(b);
+                if (b.getBlockData() instanceof WallSign || b.getState() instanceof Sign) {
                     Sign sign = (Sign)b.getState();
-                    Directional dir = (Directional)b.getBlockData();
-                    directionFacing = dir.getFacing();
                     sign.setLine(0, "#" + j);
                     sign.setLine(1, "");
                     sign.setLine(2, "");
@@ -146,11 +143,9 @@ public class CourseListener implements Listener {
     public void removeTopTen() {
         Block b = topTenLocation.getBlock();
         for (int j = 0; j < 10; j++) {
-            BlockFace directionFacing;
-            if (b.getState() instanceof Sign) {
+        	BlockFace directionFacing = plugin.getBlockHandler().getFacingDirection(b);
+            if (b.getBlockData() instanceof WallSign || b.getState() instanceof Sign) {
                 Sign sign = (Sign)b.getState();
-                Directional dir = (Directional)b.getBlockData();
-                directionFacing = dir.getFacing();
                 sign.setLine(0, "");
                 sign.setLine(1, "");
                 sign.setLine(2, "");

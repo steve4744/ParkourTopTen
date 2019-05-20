@@ -6,12 +6,12 @@ import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.Directional;
+import org.bukkit.block.data.type.Sign;
+import org.bukkit.block.data.type.WallSign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.material.Sign;
 import org.bukkit.util.BlockIterator;
 
 import me.A5H73Y.Parkour.Course.CourseMethods;
@@ -71,14 +71,12 @@ public class ParkourTopTenCommand implements CommandExecutor {
                 break;
             }
             //plugin.getLogger().info("DEBUG: " + lastBlock);
-            if (lastBlock.getState() instanceof Sign) {
+            if (!(lastBlock.getBlockData() instanceof WallSign) && !(lastBlock.getBlockData() instanceof Sign)) {
                 player.sendMessage(ChatColor.RED + "You must be looking at a sign to start");
                 return true;
             }
-
-            // Get the direction that the sign is facing
-            Directional dir = (Directional)lastBlock.getBlockData();
-            BlockFace facing = dir.getFacing();
+            
+            BlockFace facing = plugin.getBlockHandler().getFacingDirection(lastBlock);
             BlockFace right = null;
 
             // Get the direction to the right
@@ -150,8 +148,7 @@ public class ParkourTopTenCommand implements CommandExecutor {
             		continue;
             	break;
             }
-            //plugin.getLogger().info("DEBUG: " + lastBlock);
-            if (lastBlock.getState() instanceof Sign) {
+            if (!(lastBlock.getBlockData() instanceof WallSign) && !(lastBlock.getBlockData() instanceof Sign)) {
             	player.sendMessage(ChatColor.RED + "You must be looking at the #1 top ten sign");
             	return true;
             }

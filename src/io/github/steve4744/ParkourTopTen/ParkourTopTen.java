@@ -15,6 +15,7 @@ import io.github.steve4744.ParkourTopTen.Metrics.Metrics;
 public class ParkourTopTen extends JavaPlugin {
     private ParkourTopTenCommand commandListener;
     private String version;
+	private BlockHandler blockHandler;
 
     @Override
     public void onEnable() {
@@ -37,10 +38,8 @@ public class ParkourTopTen extends JavaPlugin {
             getCommand("parkourtopten").setExecutor(commandListener);
             getCommand("parkourtopten").setTabCompleter(new AutoTabCompleter());
 
-            // check for new version
+            blockHandler = new BlockHandler(this);
             checkForUpdate();
-
-            // Metrics
 			new Metrics(this);
 
             // Load from config
@@ -67,6 +66,7 @@ public class ParkourTopTen extends JavaPlugin {
         }
         getConfig().set("panels", serialize);
         saveConfig();
+        blockHandler = null;
     }
 
     private void reload() {
@@ -99,7 +99,11 @@ public class ParkourTopTen extends JavaPlugin {
         }
     }
 
-	private void checkForUpdate() {
+	public BlockHandler getBlockHandler() {
+		return blockHandler;
+	}
+
+    private void checkForUpdate() {
 		if(!getConfig().getBoolean("Check_For_Update", true)){
 			return;
 		}
