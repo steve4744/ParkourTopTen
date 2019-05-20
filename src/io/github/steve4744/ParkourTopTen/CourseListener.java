@@ -9,6 +9,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.block.Skull;
+import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Rotatable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -73,8 +74,8 @@ public class CourseListener implements Listener {
             BlockFace directionFacing;
             if (b.getState() instanceof Sign) {
                 Sign sign = (Sign)b.getState();
-                org.bukkit.material.Sign s = (org.bukkit.material.Sign) sign.getData();
-                directionFacing = s.getFacing();
+                Directional dir = (Directional)b.getBlockData();
+                directionFacing = dir.getFacing();
                 sign.setLine(0, "#" + i);
 
                 //TODO if/when Parkour implements uuids then this can be simplified
@@ -121,8 +122,8 @@ public class CourseListener implements Listener {
                 BlockFace directionFacing;
                 if (b.getState() instanceof Sign) {
                     Sign sign = (Sign)b.getState();
-                    org.bukkit.material.Sign s = (org.bukkit.material.Sign) sign.getData();
-                    directionFacing = s.getFacing();
+                    Directional dir = (Directional)b.getBlockData();
+                    directionFacing = dir.getFacing();
                     sign.setLine(0, "#" + j);
                     sign.setLine(1, "");
                     sign.setLine(2, "");
@@ -148,8 +149,8 @@ public class CourseListener implements Listener {
             BlockFace directionFacing;
             if (b.getState() instanceof Sign) {
                 Sign sign = (Sign)b.getState();
-                org.bukkit.material.Sign s = (org.bukkit.material.Sign) sign.getData();
-                directionFacing = s.getFacing();
+                Directional dir = (Directional)b.getBlockData();
+                directionFacing = dir.getFacing();
                 sign.setLine(0, "");
                 sign.setLine(1, "");
                 sign.setLine(2, "");

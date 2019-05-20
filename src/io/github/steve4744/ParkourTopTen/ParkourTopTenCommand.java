@@ -6,6 +6,7 @@ import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Directional;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -76,8 +77,8 @@ public class ParkourTopTenCommand implements CommandExecutor {
             }
 
             // Get the direction that the sign is facing
-            Sign sign = (Sign)lastBlock.getState().getData();
-            BlockFace facing = sign.getFacing();
+            Directional dir = (Directional)lastBlock.getBlockData();
+            BlockFace facing = dir.getFacing();
             BlockFace right = null;
 
             // Get the direction to the right
