@@ -150,11 +150,9 @@ public class ParkourTopTenCommand implements CommandExecutor {
             player.sendMessage(ChatColor.RED + "Could not find a ParkourTopTen display in that position");
             return true;
  
-        } else if (arg3[0].equalsIgnoreCase("info")) {
-            player.sendMessage(ChatColor.RED + "Not a valid ParkourTopTen command");
-            return true;
-        }
-		return false;
+        } 
+        player.sendMessage(ChatColor.RED + "Not a valid ParkourTopTen command");
+        return false;
     }
 
     public void sendHelp(Player player) {
