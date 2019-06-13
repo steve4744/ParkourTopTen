@@ -1,4 +1,4 @@
-package io.github.steve4744.ParkourTopTen;
+package io.github.steve4744.parkourtopten;
 
 import java.util.List;
 import org.bukkit.Bukkit;
@@ -14,10 +14,11 @@ import org.bukkit.block.data.type.WallSign;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import me.A5H73Y.Parkour.ParkourEvents.PlayerFinishCourseEvent;
-import me.A5H73Y.Parkour.Other.TimeObject;
-import me.A5H73Y.Parkour.Utilities.DatabaseMethods;
-import me.A5H73Y.Parkour.Utilities.Utils;
+
+import me.A5H73Y.parkour.event.PlayerFinishCourseEvent;
+import me.A5H73Y.parkour.other.TimeObject;
+import me.A5H73Y.parkour.utilities.DatabaseMethods;
+import me.A5H73Y.parkour.utilities.Utils;
 
 public class CourseListener implements Listener {
 

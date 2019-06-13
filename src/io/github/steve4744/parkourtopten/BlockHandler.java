@@ -1,4 +1,4 @@
-package io.github.steve4744.ParkourTopTen;
+package io.github.steve4744.parkourtopten;
 
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;

@@ -1,4 +1,4 @@
-package io.github.steve4744.ParkourTopTen;
+package io.github.steve4744.parkourtopten;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-import me.A5H73Y.Parkour.Course.CourseInfo;
+import me.A5H73Y.parkour.course.CourseInfo;
 
 public class AutoTabCompleter implements TabCompleter {
 

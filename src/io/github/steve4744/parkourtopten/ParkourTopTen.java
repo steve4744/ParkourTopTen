@@ -1,4 +1,4 @@
-package io.github.steve4744.ParkourTopTen;
+package io.github.steve4744.parkourtopten;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import io.github.steve4744.ParkourTopTen.Metrics.Metrics;
+import io.github.steve4744.parkourtopten.metrics.Metrics;
 
 public class ParkourTopTen extends JavaPlugin {
     private ParkourTopTenCommand commandListener;

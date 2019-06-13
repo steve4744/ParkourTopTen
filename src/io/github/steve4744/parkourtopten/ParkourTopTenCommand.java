@@ -1,4 +1,4 @@
-package io.github.steve4744.ParkourTopTen;
+package io.github.steve4744.parkourtopten;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import me.A5H73Y.Parkour.Course.CourseMethods;
+
+import me.A5H73Y.parkour.course.CourseMethods;
 
 
 public class ParkourTopTenCommand implements CommandExecutor {

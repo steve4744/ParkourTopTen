@@ -1,4 +1,4 @@
-package io.github.steve4744.ParkourTopTen.Metrics;
+package io.github.steve4744.parkourtopten.metrics;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

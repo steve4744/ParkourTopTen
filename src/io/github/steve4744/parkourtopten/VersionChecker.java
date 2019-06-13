@@ -1,4 +1,4 @@
-package io.github.steve4744.ParkourTopTen;
+package io.github.steve4744.parkourtopten;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
