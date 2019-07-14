@@ -56,6 +56,9 @@ public class CourseListener implements Listener {
             plugin.getLogger().severe("The location of the top ten world does not exist. Maybe a world was deleted?");
             return;
         }
+        // Ensure the chunk is loaded
+        topTenLocation.getWorld().getChunkAt(topTenLocation).load();
+        
         // Get the top 10 times for the course
         List<TimeObject> topten = DatabaseMethods.getTopCourseResults(courseName.toLowerCase(), 10);
 
