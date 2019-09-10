@@ -128,7 +128,7 @@ public class CourseListener implements Listener {
                     sign.setLine(0, "#" + j);
                     sign.setLine(1, "");
                     sign.setLine(2, "");
-                    sign.setLine(3, "");
+                    sign.setLine(3, courseName);
                     sign.update();
 
                     // Remove head
