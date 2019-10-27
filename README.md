@@ -21,7 +21,7 @@ To remove ALL the ParkourTopTen displays, simply run the remove command with the
 Parkour TopTen can be [downloaded from Spigot](https://www.spigotmc.org/resources/parkour-top-ten.46268// "ParkourTopTen by steve4744")
 
 Starting with version 2.0 of ParkourTopTen, the plugin will only run on Minecraft versions 1.13 and later.
-Version 1.4 of ParkourTopTen is the final release to support all Minecraft versions from 1.8 through to 1.12.2.
+Version 1.4.1 of ParkourTopTen is the final release to support all Minecraft versions from 1.8 through to 1.12.2.
 
 ## Installation
 * Download ParkourTopTen.jar
@@ -30,6 +30,7 @@ Version 1.4 of ParkourTopTen is the final release to support all Minecraft versi
 
 ## Notes
 1. You must have Parkour 4.2 or above for the heads to auto update as it depends on a custom event introduced in 4.2. ParkourTopTen will produce a heads display on earlier versions of Parkour but they will not auto-update.
+2. The legacy version (1.4) of ParkourTopTen (for Minecraft versions 1.8 to 1.12.2) will not work with Parkour 5.3+. Download version 1.4.1 from the Releases tab.
 2. You may occasionally get a skull in place of a player head. In this case, run "/ptt remove" and "/ptt create (course)" again. This will usually fix it.
 3. Remember to protect the heads display using Worldguard or some other tool.
 4. If you prefer a player's head to only appear once in the display, then you need to set ```UpdatePlayerDatabaseTime: true``` in the Parkour config.yml .
