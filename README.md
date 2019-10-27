@@ -1,4 +1,4 @@
-![alt text](https://www.spigotmc.org/attachments/2017-08-24_00-20-35-png.274565/ "Parkour Top Ten")
+![alt text](https://www.spigotmc.org/attachments/2019-02-25_11-50-03-png.407332/"Parkour Top Ten")
 
 # Parkour Top Ten
 
@@ -23,10 +23,11 @@ To remove ALL the ParkourTopTen displays, simply run the remove command with the
 * Restart your server - this will create the default (initially empty) config.yml
 
 ## Notes
-1. You must have Parkour 4.2 (to be released soon) or above for the heads to auto update as it depends on a custom event introduced in 4.2. ParkourTopTen will produce a heads display on earlier versions of Parkour but they will not auto-update.
-2. You may occasionally get a skull in place of a player head. In this case, run "/ptt remove" and "/ptt create (course)" again. This will usually fix it.
-3. Remember to protect the heads display using Worldguard or some other tool.
-4. If you prefer the player heads to sit directly on top of the block rather than suspended, then place a skull on each of the blocks before running the create command.
+1. You must have Parkour 4.2 or above for the heads to auto update as it depends on a custom event introduced in 4.2. ParkourTopTen will produce a heads display on earlier versions of Parkour but they will not auto-update.
+2. The legacy version (1.4) of ParkourTopTen (for Minecraft versions 1.8 to 1.12.2) will not work with Parkour 5.3. Download version 1.4.1 from the Releases tab.
+3. You may occasionally get a skull in place of a player head. In this case, run "/ptt remove" and "/ptt create (course)" again. This will usually fix it.
+4. Remember to protect the heads display using Worldguard or some other tool.
+5. If you prefer the player heads to sit directly on top of the block rather than suspended, then place a skull on each of the blocks before running the create command.
 
 
 ## Acknowledgements
