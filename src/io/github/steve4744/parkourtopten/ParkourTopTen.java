@@ -13,97 +13,99 @@ import org.bukkit.scheduler.BukkitRunnable;
 import io.github.steve4744.parkourtopten.metrics.Metrics;
 
 public class ParkourTopTen extends JavaPlugin {
-    private ParkourTopTenCommand commandListener;
-    private String version;
+	private ParkourTopTenCommand commandListener;
+	private String version;
 	private BlockHandler blockHandler;
 
-    @Override
-    public void onEnable() {
-        PluginManager pm = getServer().getPluginManager();
+	@Override
+	public void onEnable() {
+		PluginManager pm = getServer().getPluginManager();
 
-        Plugin pkr = pm.getPlugin("Parkour");
-        if (pkr == null) {
-            getLogger().severe("Parkour not loaded. Disabling plugin");
-            pm.disablePlugin(this);
+		Plugin pkr = pm.getPlugin("Parkour");
+		if (pkr == null) {
+			getLogger().severe("Parkour not loaded. Disabling plugin");
+			pm.disablePlugin(this);
 
-        } else {
-            getLogger().info("Found Parkour version " + pkr.getDescription().getVersion());
-            // Load config
-            saveDefaultConfig();
+		} else {
+			getLogger().info("Found Parkour version " + pkr.getDescription().getVersion());
 
-            version = this.getDescription().getVersion();
+			saveDefaultConfig();
+			getConfig().options().copyDefaults(true);
+			saveConfig();
 
-            // Register command
-            commandListener = new ParkourTopTenCommand(this, version);
-            getCommand("parkourtopten").setExecutor(commandListener);
-            getCommand("parkourtopten").setTabCompleter(new AutoTabCompleter());
+			version = this.getDescription().getVersion();
 
-            blockHandler = new BlockHandler(this);
-            checkForUpdate();
+			// Register command
+			commandListener = new ParkourTopTenCommand(this, version);
+			getCommand("parkourtopten").setExecutor(commandListener);
+			getCommand("parkourtopten").setTabCompleter(new AutoTabCompleter());
+
+			blockHandler = new BlockHandler(this);
+			checkForUpdate();
 			new Metrics(this);
 
-            // Load from config
-            new BukkitRunnable() {
-                @Override
-            	public void run() {
-                    reload();	
-                }
-            }.runTaskLater(this, 20L);
-        }
-    }
+			// Load from config
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					reload();
+				}
+			}.runTaskLater(this, 20L);
+		}
+	}
 
-    @Override
-    public void onDisable() {
-        if (commandListener == null) {
-            return;
-        }
-        // Save any top ten lists
-        List<CourseListener> topTen = commandListener.getTopTen();
-        List<String> serialize = new ArrayList<String>();
-        for (CourseListener panel : topTen) {
-            //getLogger().info("DEBUG: serializing");
-            serialize.add(panel.getCourseName() + ":" + Util.getStringLocation(panel.getTopTenLocation()) + ":" + panel.getDirection().toString());
-        }
-        getConfig().set("panels", serialize);
-        saveConfig();
-        blockHandler = null;
-    }
+	@Override
+	public void onDisable() {
+		if (commandListener == null) {
+			return;
+		}
+		// Save any top ten lists
+		List<CourseListener> topTen = commandListener.getTopTen();
+		List<String> serialize = new ArrayList<String>();
+		for (CourseListener panel : topTen) {
+			//getLogger().info("DEBUG: serializing");
+			serialize.add(panel.getCourseName() + ":" + Util.getStringLocation(panel.getTopTenLocation()) + ":" + panel.getDirection().toString());
+		}
+		getConfig().set("panels", serialize);
+		saveConfig();
+		blockHandler = null;
+	}
 
-    private void reload() {
-        // Load any existing panels
-        List<String> serialize = getConfig().getStringList("panels");
-        for (String panel : serialize) {
-            try {
-                String direction = panel.substring(panel.lastIndexOf(':')+1);
-                //getLogger().info("DEBUG: direction = " + direction);
-                BlockFace dir = BlockFace.valueOf(direction);
+	private void reload() {
+		// Load any existing panels
+		List<String> serialize = getConfig().getStringList("panels");
+		for (String panel : serialize) {
+			try {
+				String direction = panel.substring(panel.lastIndexOf(':')+1);
+				//getLogger().info("DEBUG: direction = " + direction);
+				BlockFace dir = BlockFace.valueOf(direction);
 
-                String location = panel.substring(panel.indexOf(':')+1, panel.lastIndexOf(':'));
-                //getLogger().info("DEBUG: location = " + location);
-                Location loc = Util.getLocationString(location);
-                //getLogger().info("DEBUG: loc = " + loc);
+				String location = panel.substring(panel.indexOf(':')+1, panel.lastIndexOf(':'));
+				//getLogger().info("DEBUG: location = " + location);
+				Location loc = Util.getLocationString(location);
+				//getLogger().info("DEBUG: loc = " + loc);
 
-                String course = panel.substring(0, panel.indexOf(':'));
-                //getLogger().info("DEBUG: course = " + course);
+				String course = panel.substring(0, panel.indexOf(':'));
+				//getLogger().info("DEBUG: course = " + course);
 
-                CourseListener newTopTen = new CourseListener(this, loc, dir, course);
+				CourseListener newTopTen = new CourseListener(this, loc, dir, course);
 
-                commandListener.addTopTen(newTopTen);
-                getServer().getPluginManager().registerEvents(newTopTen, this);
-                //getLogger().info("DEBUG: new topten panel at " + loc + " heading " + dir + " for " + course);
+				commandListener.addTopTen(newTopTen);
+				getServer().getPluginManager().registerEvents(newTopTen, this);
+				//getLogger().info("DEBUG: new topten panel at " + loc + " heading " + dir + " for " + course);
 
-            } catch(Exception e) {
-                getLogger().severe("Problem loading panel " + panel + " skipping...");
-                e.printStackTrace();
-            }
-        }
-    }
+			} catch(Exception e) {
+				getLogger().severe("Problem loading panel " + panel + " skipping...");
+				e.printStackTrace();
+			}
+		}
+	}
 
 	public BlockHandler getBlockHandler() {
 		return blockHandler;
 	}
 
-    private void checkForUpdate() {
+	private void checkForUpdate() {
 		if(!getConfig().getBoolean("Check_For_Update", true)){
 			return;
 		}

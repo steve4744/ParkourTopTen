@@ -1,5 +1,6 @@
 package io.github.steve4744.parkourtopten;
 
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Directional;
@@ -17,6 +18,11 @@ public class BlockHandler {
 		this.plugin = plugin;
 	}
 
+	/**
+	 * Get the facing direction of the block.
+	 * @param block
+	 * @return
+	 */
 	public BlockFace getFacingDirection(Block block) {
 		BlockFace facing = null;
 		if (block.getBlockData() instanceof WallSign) {
@@ -29,6 +35,11 @@ public class BlockHandler {
 		return facing;
 	}
 
+	/**
+	 * Get the block the player is looking at.
+	 * @param player
+	 * @return
+	 */
 	public Block getTargetedBlock(Player player) {
 		BlockIterator iter = new BlockIterator(player, 10);
 		Block block = iter.next();
@@ -39,5 +50,21 @@ public class BlockHandler {
 			break;
 		}
 		return block;
+	}
+
+	/**
+	 * Get the block above the sign, or the block above the block the sign is attached to.
+	 * @param block
+	 * @param face
+	 * @return
+	 */
+	public Block getHeadBlock(Block block) {
+		BlockFace directionFacing = getFacingDirection(block);
+		boolean placeAboveSign = plugin.getConfig().getBoolean("placeHeadAboveSign");
+		return placeAboveSign ? block.getRelative(BlockFace.UP) : block.getRelative(BlockFace.UP).getRelative(directionFacing.getOppositeFace());
+	}
+
+	public void removeHead(Block block) {
+		getHeadBlock(block).setType(Material.AIR);
 	}
 }
