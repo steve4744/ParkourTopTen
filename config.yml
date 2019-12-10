@@ -3,4 +3,4 @@
 # Set this to true if you want the head placed above the sign rather than on the block the sign is attached to. 
 placeHeadAboveSign: false
 # On startup, check for new release on SpigotMC.org
-Check_For_Update: true
+checkForUpdate: true

@@ -28,6 +28,7 @@ public class AutoTabCompleter implements TabCompleter {
 				list.add("help");
 				list.add("create");
 				list.add("remove");
+				list.add("reload");
 			}
 		} else if (args.length == 2 && player.hasPermission("parkourtopten.admin")) {
 			if (args[0].equalsIgnoreCase("create")) {

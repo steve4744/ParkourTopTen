@@ -62,7 +62,6 @@ public class CourseListener implements Listener {
 		// Get the top 10 times for the course
 		List<TimeObject> topten = DatabaseMethods.getTopCourseResults(courseName.toLowerCase(), 10);
 
-		// Display the top ten heads
 		int i = 0;
 		Block b = topTenLocation.getBlock();
 		BlockFace directionFacing = plugin.getBlockHandler().getFacingDirection(b);
@@ -126,7 +125,6 @@ public class CourseListener implements Listener {
 					sign.setLine(3, courseName);
 					sign.update();
 
-					// Remove head
 					plugin.getBlockHandler().removeHead(b);
 
 				} else {
@@ -149,7 +147,6 @@ public class CourseListener implements Listener {
 				sign.setLine(3, "");
 				sign.update();
 
-				// Remove head
 				plugin.getBlockHandler().removeHead(b);
 
 			} else {

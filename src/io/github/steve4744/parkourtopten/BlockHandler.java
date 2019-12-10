@@ -55,7 +55,6 @@ public class BlockHandler {
 	/**
 	 * Get the block above the sign, or the block above the block the sign is attached to.
 	 * @param block
-	 * @param face
 	 * @return
 	 */
 	public Block getHeadBlock(Block block) {

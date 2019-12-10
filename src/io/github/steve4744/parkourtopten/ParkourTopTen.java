@@ -35,7 +35,6 @@ public class ParkourTopTen extends JavaPlugin {
 
 			version = this.getDescription().getVersion();
 
-			// Register command
 			commandListener = new ParkourTopTenCommand(this, version);
 			getCommand("parkourtopten").setExecutor(commandListener);
 			getCommand("parkourtopten").setTabCompleter(new AutoTabCompleter());
@@ -59,15 +58,7 @@ public class ParkourTopTen extends JavaPlugin {
 		if (commandListener == null) {
 			return;
 		}
-		// Save any top ten lists
-		List<CourseListener> topTen = commandListener.getTopTen();
-		List<String> serialize = new ArrayList<String>();
-		for (CourseListener panel : topTen) {
-			//getLogger().info("DEBUG: serializing");
-			serialize.add(panel.getCourseName() + ":" + Util.getStringLocation(panel.getTopTenLocation()) + ":" + panel.getDirection().toString());
-		}
-		getConfig().set("panels", serialize);
-		saveConfig();
+		saveDisplays();
 		blockHandler = null;
 	}
 
@@ -101,12 +92,22 @@ public class ParkourTopTen extends JavaPlugin {
 		}
 	}
 
+	public void saveDisplays() {
+		List<CourseListener> topTen = commandListener.getTopTen();
+		List<String> serialize = new ArrayList<String>();
+		for (CourseListener panel : topTen) {
+			serialize.add(panel.getCourseName() + ":" + Util.getStringLocation(panel.getTopTenLocation()) + ":" + panel.getDirection().toString());
+		}
+		getConfig().set("panels", serialize);
+		saveConfig();
+	}
+
 	public BlockHandler getBlockHandler() {
 		return blockHandler;
 	}
 
 	private void checkForUpdate() {
-		if(!getConfig().getBoolean("Check_For_Update", true)){
+		if(!getConfig().getBoolean("checkForUpdate", true)) {
 			return;
 		}
 		new BukkitRunnable() {
