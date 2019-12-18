@@ -15,10 +15,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
-import me.A5H73Y.parkour.event.PlayerFinishCourseEvent;
-import me.A5H73Y.parkour.other.TimeObject;
-import me.A5H73Y.parkour.utilities.DatabaseMethods;
-import me.A5H73Y.parkour.utilities.Utils;
+import me.A5H73Y.Parkour.Other.TimeObject;
+import me.A5H73Y.Parkour.ParkourEvents.PlayerFinishCourseEvent;
+import me.A5H73Y.Parkour.Utilities.DatabaseMethods;
+import me.A5H73Y.Parkour.Utilities.Utils;
 
 public class CourseListener implements Listener {
 

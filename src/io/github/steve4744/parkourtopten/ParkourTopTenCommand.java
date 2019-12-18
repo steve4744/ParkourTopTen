@@ -13,7 +13,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import me.A5H73Y.parkour.course.CourseMethods;
+import me.A5H73Y.Parkour.Course.CourseMethods;
 
 public class ParkourTopTenCommand implements CommandExecutor {
 	private final ParkourTopTen plugin;
