@@ -1,6 +1,8 @@
-# Config file for ParkourTopTen
+# Configuration file for ParkourTopTen
 #
-# Set this to true if you want the head placed above the sign rather than on the block the sign is attached to. 
+# Set this to true if you want the head placed above the sign rather than on top of the block the sign is attached to.
 placeHeadAboveSign: false
+# If true, all signs in a display must use the same sign type
+enforceSameSignType: false
 # On startup, check for new release on SpigotMC.org
 checkForUpdate: true

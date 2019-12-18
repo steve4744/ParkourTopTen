@@ -64,6 +64,7 @@ public class CourseListener implements Listener {
 
 		int i = 0;
 		Block b = topTenLocation.getBlock();
+		Material signType = b.getType();
 		BlockFace directionFacing = plugin.getBlockHandler().getFacingDirection(b);
 
 		for (i = 0; i < topten.size(); ) {
@@ -76,6 +77,10 @@ public class CourseListener implements Listener {
 
 			// Get the block and move
 			if (b.getBlockData() instanceof WallSign || b.getBlockData() instanceof org.bukkit.block.data.type.Sign) {
+				if (plugin.getConfig().getBoolean("enforceSameSignType") && b.getType() != signType) {
+					return;
+				}
+
 				Sign sign = (Sign)b.getState();
 				sign.setLine(0, "#" + i);
 
@@ -118,6 +123,9 @@ public class CourseListener implements Listener {
 		if (i < 10) {
 			for (int j = i+1; j < 11; j++) {
 				if (b.getBlockData() instanceof WallSign || b.getBlockData() instanceof org.bukkit.block.data.type.Sign) {
+					if (plugin.getConfig().getBoolean("enforceSameSignType") && b.getType() != signType) {
+						return;
+					}
 					Sign sign = (Sign)b.getState();
 					sign.setLine(0, "#" + j);
 					sign.setLine(1, "");
@@ -138,8 +146,12 @@ public class CourseListener implements Listener {
 
 	public void removeTopTen() {
 		Block b = topTenLocation.getBlock();
+		Material signType = b.getType();
 		for (int j = 0; j < 10; j++) {
 			if (b.getBlockData() instanceof WallSign || b.getBlockData() instanceof org.bukkit.block.data.type.Sign) {
+				if (plugin.getConfig().getBoolean("enforceSameSignType") && b.getType() != signType) {
+					return;
+				}
 				Sign sign = (Sign)b.getState();
 				sign.setLine(0, "");
 				sign.setLine(1, "");

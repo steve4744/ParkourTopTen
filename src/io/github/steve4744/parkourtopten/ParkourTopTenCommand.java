@@ -44,7 +44,7 @@ public class ParkourTopTenCommand implements CommandExecutor {
 			sender.sendMessage(ChatColor.RED + "You must be OP or have parkourtopten.admin permission to use this command");
 			return true;
 		}
-		if (arg3.length == 0 || arg3[0].equalsIgnoreCase("help")){
+		if (arg3.length == 0 || arg3[0].equalsIgnoreCase("help")) {
 			sendHelp(player);
 			return true;
 		}
