@@ -31,9 +31,9 @@ Version 1.4.1 of ParkourTopTen is the final release to support all Minecraft ver
 ## Notes
 1. You must have Parkour 4.2 or above for the heads to auto update as it depends on a custom event introduced in 4.2. ParkourTopTen will produce a heads display on earlier versions of Parkour but they will not auto-update.
 2. The legacy version (1.4) of ParkourTopTen (for Minecraft versions 1.8 to 1.12.2) will not work with Parkour 5.3+. Download version 1.4.1 from the Releases tab.
-2. You may occasionally get a skull in place of a player head. In this case, run "/ptt remove" and "/ptt create (course)" again. This will usually fix it.
-3. Remember to protect the heads display using Worldguard or some other tool.
-4. If you prefer a player's head to only appear once in the display, then you need to set ```UpdatePlayerDatabaseTime: true``` in the Parkour config.yml .
+3. You may occasionally get a skull in place of a player head. In this case, run "/ptt remove" and "/ptt create (course)" again. This will usually fix it.
+4. Remember to protect the heads display using Worldguard or some other tool.
+5. If you prefer a player's head to only appear once in the display, then you need to set ```UpdatePlayerDatabaseTime: true``` in the Parkour config.yml .
 
 
 ## Acknowledgements
