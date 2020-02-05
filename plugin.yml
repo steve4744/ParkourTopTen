@@ -4,7 +4,7 @@ version: 2.5.1
 api-version: 1.13
 description: Plugin for Parkour to show top ten heads
 author: steve4744 (based on TopTenHeads by tastybento)
-depends: [Parkour]
+depend: [Parkour]
 commands:
     parkourtopten:
         aliases: [ptt]
