@@ -16,7 +16,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
 import io.github.a5h73y.Parkour;
-import io.github.a5h73y.database.TimeObject;
+import io.github.a5h73y.database.TimeEntry;
 import io.github.a5h73y.event.PlayerFinishCourseEvent;
 import io.github.a5h73y.utilities.Utils;
 
@@ -60,7 +60,7 @@ public class CourseListener implements Listener {
 		topTenLocation.getWorld().getChunkAt(topTenLocation).load();
         
 		// Get the top 10 times for the course
-		List<TimeObject> topten = Parkour.getDatabase().getTopCourseResults(courseName.toLowerCase(), 10);
+		List<TimeEntry> topten = Parkour.getDatabase().getTopCourseResults(courseName.toLowerCase(), 10);
 
 		int i = 0;
 		Block b = topTenLocation.getBlock();
