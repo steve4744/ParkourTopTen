@@ -18,7 +18,7 @@ import org.bukkit.event.Listener;
 import io.github.a5h73y.parkour.Parkour;
 import io.github.a5h73y.parkour.database.TimeEntry;
 import io.github.a5h73y.parkour.event.PlayerFinishCourseEvent;
-import io.github.a5h73y.parkour.utilities.Utils;
+import io.github.a5h73y.parkour.utility.DateTimeUtils;
 
 public class CourseListener implements Listener {
 
@@ -60,7 +60,7 @@ public class CourseListener implements Listener {
 		topTenLocation.getWorld().getChunkAt(topTenLocation).load();
         
 		// Get the top 10 times for the course
-		List<TimeEntry> topten = Parkour.getDatabase().getTopCourseResults(courseName.toLowerCase(), 10);
+		List<TimeEntry> topten = Parkour.getInstance().getDatabase().getTopCourseResults(courseName.toLowerCase(), 10);
 
 		int i = 0;
 		Block b = topTenLocation.getBlock();
@@ -68,8 +68,8 @@ public class CourseListener implements Listener {
 		BlockFace directionFacing = plugin.getBlockHandler().getFacingDirection(b);
 
 		for (i = 0; i < topten.size(); ) {
-			String name = topten.get(i).getPlayer();
-			String time = Utils.displayCurrentTime(topten.get(i).getTime());
+			String name = topten.get(i).getPlayerName();
+			String time = DateTimeUtils.displayCurrentTime(topten.get(i).getTime());
 			i++;
 			//plugin.getLogger().info("DEBUG: [dTT] " + i);
 			//plugin.getLogger().info("DEBUG: [dTT] " + name);

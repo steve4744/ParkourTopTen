@@ -13,7 +13,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import io.github.a5h73y.parkour.course.CourseMethods;
+import io.github.a5h73y.parkour.Parkour;
 
 public class ParkourTopTenCommand implements CommandExecutor {
 	private final ParkourTopTen plugin;
@@ -54,7 +54,7 @@ public class ParkourTopTenCommand implements CommandExecutor {
 				player.sendMessage(ChatColor.RED + "You must specify a Parkour course to display");
 				return true;
 			}
-			if (!CourseMethods.exist(arg3[1])) {
+			if (!Parkour.getInstance().getCourseManager().courseExists(arg3[1])) {
 				player.sendMessage(ChatColor.RED + "Parkour course " + ChatColor.AQUA + arg3[1] + ChatColor.RED + " does not exist");
 				return true;
 			}

@@ -8,7 +8,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-import io.github.a5h73y.parkour.course.CourseInfo;
+import io.github.a5h73y.parkour.Parkour;
+import io.github.a5h73y.parkour.type.course.CourseInfo;
 
 public class AutoTabCompleter implements TabCompleter {
 
