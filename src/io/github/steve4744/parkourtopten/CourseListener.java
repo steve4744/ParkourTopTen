@@ -60,7 +60,7 @@ public class CourseListener implements Listener {
 		topTenLocation.getWorld().getChunkAt(topTenLocation).load();
         
 		// Get the top 10 times for the course
-		List<TimeEntry> topten = Parkour.getInstance().getDatabase().getTopCourseResults(courseName.toLowerCase(), 10);
+		List<TimeEntry> topten = Parkour.getInstance().getDatabase().getTopBestTimes(courseName.toLowerCase(), 10);
 
 		int i = 0;
 		Block b = topTenLocation.getBlock();
