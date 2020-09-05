@@ -30,9 +30,9 @@ public class Util {
 	final String[] parts = s.split(":");
 	if (parts.length == 6) {
 	    final World w = Bukkit.getServer().getWorld(parts[0]);
-	
+
 	    if (w == null) {
-		return null;
+		    return null;
 	    }
 	    final int x = Integer.parseInt(parts[1]);
 	    final int y = Integer.parseInt(parts[2]);

@@ -75,6 +75,10 @@ public class ParkourTopTen extends JavaPlugin {
 				//getLogger().info("DEBUG: location = " + location);
 				Location loc = Util.getLocationString(location);
 				//getLogger().info("DEBUG: loc = " + loc);
+				if (loc == null) {
+					getLogger().severe("The location of the top ten panel does not exist. Maybe a world was deleted?");
+					continue;
+				}
 
 				String course = panel.substring(0, panel.indexOf(':'));
 				//getLogger().info("DEBUG: course = " + course);
