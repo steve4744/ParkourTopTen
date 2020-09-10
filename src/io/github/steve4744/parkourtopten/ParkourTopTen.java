@@ -68,26 +68,25 @@ public class ParkourTopTen extends JavaPlugin {
 		for (String panel : serialize) {
 			try {
 				String direction = panel.substring(panel.lastIndexOf(':')+1);
-				//getLogger().info("DEBUG: direction = " + direction);
 				BlockFace dir = BlockFace.valueOf(direction);
 
 				String location = panel.substring(panel.indexOf(':')+1, panel.lastIndexOf(':'));
-				//getLogger().info("DEBUG: location = " + location);
 				Location loc = Util.getLocationString(location);
-				//getLogger().info("DEBUG: loc = " + loc);
 				if (loc == null) {
 					getLogger().severe("The location of the top ten panel does not exist. Maybe a world was deleted?");
 					continue;
 				}
 
 				String course = panel.substring(0, panel.indexOf(':'));
-				//getLogger().info("DEBUG: course = " + course);
+
+				if (isDebug() ) {
+					getLogger().info("DEBUG: [ptt] new topten panel at " + loc + " heading " + dir + " for " + course);
+				}
 
 				CourseListener newTopTen = new CourseListener(this, loc, dir, course);
 
 				commandListener.addTopTen(newTopTen);
 				getServer().getPluginManager().registerEvents(newTopTen, this);
-				//getLogger().info("DEBUG: new topten panel at " + loc + " heading " + dir + " for " + course);
 
 			} catch(Exception e) {
 				getLogger().severe("Problem loading panel " + panel + " skipping...");
@@ -108,6 +107,10 @@ public class ParkourTopTen extends JavaPlugin {
 
 	public BlockHandler getBlockHandler() {
 		return blockHandler;
+	}
+
+	public boolean isDebug() {
+		return getConfig().getBoolean("debug");
 	}
 
 	private void checkForUpdate() {

@@ -6,3 +6,5 @@ placeHeadAboveSign: false
 enforceSameSignType: false
 # On startup, check for new release on SpigotMC.org
 checkForUpdate: true
+# If true, log verbose messages to console
+debug: false

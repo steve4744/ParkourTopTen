@@ -61,7 +61,9 @@ public class ParkourTopTenCommand implements CommandExecutor {
 
 			Block lastBlock = plugin.getBlockHandler().getTargetedBlock(player);
 
-			//plugin.getLogger().info("DEBUG: " + lastBlock);
+			if (plugin.isDebug()) {
+				plugin.getLogger().info("DEBUG: [pttc] lastBlock = " + lastBlock);
+			}
 			if (!(lastBlock.getBlockData() instanceof WallSign) && !(lastBlock.getBlockData() instanceof Sign)) {
 				player.sendMessage(ChatColor.RED + "You must be looking at a sign to start");
 				return true;
