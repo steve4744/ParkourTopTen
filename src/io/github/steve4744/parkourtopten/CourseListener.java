@@ -1,10 +1,11 @@
 package io.github.steve4744.parkourtopten;
 
 import java.util.List;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
@@ -67,13 +68,12 @@ public class CourseListener implements Listener {
 		Material signType = b.getType();
 		BlockFace directionFacing = plugin.getBlockHandler().getFacingDirection(b);
 
-		for (i = 0; i < topten.size(); ) {
-			String name = topten.get(i).getPlayerName();
-			String time = DateTimeUtils.displayCurrentTime(topten.get(i).getTime());
-			i++;
+		for (i = 0; i < Math.min(topten.size(), 10); i++) {
 			//plugin.getLogger().info("DEBUG: [dTT] " + i);
-			//plugin.getLogger().info("DEBUG: [dTT] " + name);
-			//plugin.getLogger().info("DEBUG: [dTT] " + time);
+			//plugin.getLogger().info("DEBUG: [dTT] " + topten.get(i).getPlayerName());
+			//plugin.getLogger().info("DEBUG: [dTT] " + topten.get(i).getPlayerId());
+			//plugin.getLogger().info("DEBUG: [dTT] " + topten.get(i).getPlayerUUID());
+			//plugin.getLogger().info("DEBUG: [dTT] " + DateTimeUtils.displayCurrentTime(topten.get(i).getTime()));
 
 			// Get the block and move
 			if (b.getBlockData() instanceof WallSign || b.getBlockData() instanceof org.bukkit.block.data.type.Sign) {
@@ -82,12 +82,9 @@ public class CourseListener implements Listener {
 				}
 
 				Sign sign = (Sign)b.getState();
-				sign.setLine(0, "#" + i);
-
-				//TODO if/when Parkour implements uuids then this can be simplified
-				OfflinePlayer player = Bukkit.getOfflinePlayer(Bukkit.getOfflinePlayer(name).getUniqueId());
-				sign.setLine(1, name);
-				sign.setLine(2, "Time: " + time);
+				sign.setLine(0, "#" + (i + 1));
+				sign.setLine(1, topten.get(i).getPlayerName());
+				sign.setLine(2, "Time: " + DateTimeUtils.displayCurrentTime(topten.get(i).getTime()));
 				sign.setLine(3, courseName);
 				sign.update();
 
@@ -105,19 +102,15 @@ public class CourseListener implements Listener {
 
 				// Set the owner
 				Skull skull = (Skull)headBlock.getState();
-				skull.setOwningPlayer(player);
+				skull.setOwningPlayer(Bukkit.getOfflinePlayer(UUID.fromString(topten.get(i).getPlayerUUID())));
 				skull.update();
 
 			} else {
 				// if there's no more signs then stop
 				return;
 			}
-
 			// Move to the next block
 			b = b.getRelative(direction);
-			if (i == 10) {
-				break;
-			}
 		}
 		// Less than 10 in the top ten
 		if (i < 10) {
