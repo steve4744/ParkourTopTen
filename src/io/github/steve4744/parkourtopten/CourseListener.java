@@ -37,7 +37,6 @@ public class CourseListener implements Listener {
 	public CourseListener(ParkourTopTen plugin, Location topTenLocation, BlockFace direction, String courseName) {
 		this.plugin = plugin;
 		this.topTenLocation = topTenLocation;
-		//plugin.getLogger().info("DEBUG: [CL] direction = " + direction);
 		this.direction = direction;
 		this.courseName = courseName;
 		displayTopTen();
@@ -69,11 +68,13 @@ public class CourseListener implements Listener {
 		BlockFace directionFacing = plugin.getBlockHandler().getFacingDirection(b);
 
 		for (i = 0; i < Math.min(topten.size(), 10); i++) {
-			//plugin.getLogger().info("DEBUG: [dTT] " + i);
-			//plugin.getLogger().info("DEBUG: [dTT] " + topten.get(i).getPlayerName());
-			//plugin.getLogger().info("DEBUG: [dTT] " + topten.get(i).getPlayerId());
-			//plugin.getLogger().info("DEBUG: [dTT] " + topten.get(i).getPlayerUUID());
-			//plugin.getLogger().info("DEBUG: [dTT] " + DateTimeUtils.displayCurrentTime(topten.get(i).getTime()));
+			if (plugin.isDebug()) {
+				plugin.getLogger().info("DEBUG: [dTT] " + i);
+				plugin.getLogger().info("DEBUG: [dTT] " + topten.get(i).getPlayerName());
+				plugin.getLogger().info("DEBUG: [dTT] " + topten.get(i).getPlayerId());
+				plugin.getLogger().info("DEBUG: [dTT] " + topten.get(i).getPlayerUUID());
+				plugin.getLogger().info("DEBUG: [dTT] " + DateTimeUtils.displayCurrentTime(topten.get(i).getTime()));
+			}
 
 			// Get the block and move
 			if (b.getBlockData() instanceof WallSign || b.getBlockData() instanceof org.bukkit.block.data.type.Sign) {
