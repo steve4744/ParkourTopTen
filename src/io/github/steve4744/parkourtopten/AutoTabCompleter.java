@@ -32,7 +32,7 @@ public class AutoTabCompleter implements TabCompleter {
 			}
 		} else if (args.length == 2 && player.hasPermission("parkourtopten.admin")) {
 			if (args[0].equalsIgnoreCase("create")) {
-				list.addAll(CourseInfo.getAllCourses());
+				list.addAll(CourseInfo.getAllCourseNames());
 			}
 		}
 		for (String s : list) {
