@@ -72,7 +72,7 @@ public class CourseListener implements Listener {
 				plugin.getLogger().info("DEBUG: [dTT] " + i);
 				plugin.getLogger().info("DEBUG: [dTT] " + topten.get(i).getPlayerName());
 				plugin.getLogger().info("DEBUG: [dTT] " + topten.get(i).getPlayerId());
-				plugin.getLogger().info("DEBUG: [dTT] " + topten.get(i).getPlayerUUID());
+				plugin.getLogger().info("DEBUG: [dTT] " + topten.get(i).getPlayerUuid());
 				plugin.getLogger().info("DEBUG: [dTT] " + DateTimeUtils.displayCurrentTime(topten.get(i).getTime()));
 			}
 
@@ -103,7 +103,7 @@ public class CourseListener implements Listener {
 
 				// Set the owner
 				Skull skull = (Skull)headBlock.getState();
-				skull.setOwningPlayer(Bukkit.getOfflinePlayer(UUID.fromString(topten.get(i).getPlayerUUID())));
+				skull.setOwningPlayer(Bukkit.getOfflinePlayer(UUID.fromString(topten.get(i).getPlayerUuid())));
 				skull.update();
 
 			} else {
