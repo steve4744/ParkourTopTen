@@ -18,10 +18,13 @@ To remove ALL the ParkourTopTen displays, simply run the remove command with the
 * /ptt help - help on running ParkourTopTen commands
 
 ## Download
-Parkour TopTen can be [downloaded from Spigot](https://www.spigotmc.org/resources/parkour-top-ten.46268// "ParkourTopTen by steve4744")
+ParkourTopTen can be [downloaded from Spigot](https://www.spigotmc.org/resources/parkour-top-ten.46268// "ParkourTopTen by steve4744")
 
-Version 3.0 is only compatible with Parkour v6.0+ and Minecraft v1.13 and later.
-Version 1.4.1 of ParkourTopTen is the final release to support all Minecraft versions from 1.8 through to 1.12.2.
+Version 3.0 of ParkourTopTen is only compatible with Parkour v6.0+ and Minecraft v1.13 and later.
+
+The versions compatible with Parkour v5.3 are no longer supported. Please upgrade to Parkour v6.0.
+Version 2.5.1 of ParkourTopTen is only compatible with Parkour v5.3 and Minecraft v1.13 and later.
+Version 1.4.1 of ParkourTopTen is only compatible with Parkour v5.3 and Minecraft v1.8 through to 1.12.2.
 
 ## Installation
 * Download ParkourTopTen.jar
@@ -29,17 +32,15 @@ Version 1.4.1 of ParkourTopTen is the final release to support all Minecraft ver
 * Restart your server - this will create the default (initially empty) config.yml
 
 ## Notes
-1. The legacy version (1.4) of ParkourTopTen (for Minecraft versions 1.8 to 1.12.2) will not work with Parkour 5.3+. Download version 1.4.1 from the Releases tab.
-2. You may occasionally get a skull in place of a player head. In this case, run "/ptt remove" and "/ptt create (course)" again. This will usually fix it.
-3. Remember to protect the heads display using Worldguard or some other tool.
-4. If you prefer a player's head to only appear once in the display, then you need to set ```UpdatePlayerDatabaseTime: true``` in the Parkour config.yml .
+1. You may occasionally get a skull in place of a player head. In this case, run "/ptt remove" and "/ptt create (course)" again. This will usually fix it.
+2. Remember to protect the heads display using Worldguard or some other tool.
+3. If you prefer a player's head to only appear once in the display, then you need to set ```UpdatePlayerDatabaseTime: true``` in the Parkour config.yml .
 
 
 ## Acknowledgements
-tastybento for the original [TopTenHeads](https://github.com/tastybento/TopTenHeads) for Askyblock on which this plugin is based.<br>
+tastybento for the original [TopTenHeads](https://github.com/tastybento/TopTenHeads) for Askyblock on which this plugin was originally based.<br>
 A5H73Y for the excellent [Parkour](https://github.com/A5H73Y/Parkour) plugin.
 
-<br />
 <br />
 <br />
 Updated steve4744 - 20th December 2020
