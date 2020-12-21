@@ -20,9 +20,10 @@ To remove ALL the ParkourTopTen displays, simply run the remove command with the
 ## Download
 ParkourTopTen can be [downloaded from Spigot](https://www.spigotmc.org/resources/parkour-top-ten.46268// "ParkourTopTen by steve4744")
 
-Version 3.0 of ParkourTopTen is only compatible with Parkour v6.0+ and Minecraft v1.13 and later.
+**Version 3.0 of ParkourTopTen is only compatible with Parkour v6.0+ and Minecraft v1.13 and later.**
 
 The versions compatible with Parkour v5.3 are no longer supported. Please upgrade to Parkour v6.0.
+
 Version 2.5.1 of ParkourTopTen is only compatible with Parkour v5.3 and Minecraft v1.13 and later.
 Version 1.4.1 of ParkourTopTen is only compatible with Parkour v5.3 and Minecraft v1.8 through to 1.12.2.
 
