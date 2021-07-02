@@ -45,8 +45,9 @@ public class BlockHandler {
 		Block block = iter.next();
 		while (iter.hasNext()) {
 			block = iter.next();
-			if (Util.isAir(block.getType()))
+			if (block.getType().isAir()) {
 				continue;
+			}
 			break;
 		}
 		return block;

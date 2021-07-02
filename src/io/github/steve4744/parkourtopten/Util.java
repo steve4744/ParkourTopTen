@@ -2,7 +2,6 @@ package io.github.steve4744.parkourtopten;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
 
 /**
@@ -59,18 +58,6 @@ public class Util {
     		return "";
     	}
     	return l.getWorld().getName() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ() + ":" + Float.floatToIntBits(l.getYaw()) + ":" + Float.floatToIntBits(l.getPitch());
-    }
-
-    /**
-     * Beginning MC1.13 there is more than 1 type of AIR
-     * 
-     * @author steve4744
-     * 
-     * @param material
-     * @return
-     */
-    public static boolean isAir(Material material) {
-    	return material == Material.AIR || material == Material.CAVE_AIR || material == Material.VOID_AIR;
     }
 
 }
