@@ -16,6 +16,7 @@ public class ParkourTopTen extends JavaPlugin {
 	private ParkourTopTenCommand commandListener;
 	private String version;
 	private BlockHandler blockHandler;
+	private static final int BSTATS_PLUGIN_ID = 2147;
 
 	@Override
 	public void onEnable() {
@@ -41,7 +42,7 @@ public class ParkourTopTen extends JavaPlugin {
 
 			blockHandler = new BlockHandler(this);
 			checkForUpdate();
-			new Metrics(this);
+			new Metrics(this, BSTATS_PLUGIN_ID);
 
 			// Load from config
 			new BukkitRunnable() {
