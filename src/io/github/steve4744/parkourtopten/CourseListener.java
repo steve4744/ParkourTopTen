@@ -15,6 +15,7 @@ import org.bukkit.block.data.type.WallSign;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import io.github.a5h73y.parkour.Parkour;
 import io.github.a5h73y.parkour.database.TimeEntry;
@@ -47,7 +48,12 @@ public class CourseListener implements Listener {
 		String coursecompleted = event.getCourseName();
 		// Only update heads for course just completed
 		if (coursecompleted.equalsIgnoreCase(courseName)) {
-			displayTopTen();
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					displayTopTen();
+				}
+			}.runTaskLater(plugin, 10L);
 		}
 	}
 
