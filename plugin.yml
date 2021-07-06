@@ -1,9 +1,9 @@
 name: ParkourTopTen
 main: io.github.steve4744.parkourtopten.ParkourTopTen
-version: 3.0
+version: 3.1
 api-version: 1.17
 description: Plugin for Parkour to show top ten heads
-author: steve4744 (based on TopTenHeads by tastybento)
+author: steve4744 (originally based on TopTenHeads by tastybento)
 depend: [Parkour]
 commands:
     parkourtopten:
