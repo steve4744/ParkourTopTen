@@ -53,7 +53,7 @@ public class CourseListener implements Listener {
 				public void run() {
 					displayTopTen();
 				}
-			}.runTaskLater(plugin, 10L);
+			}.runTaskLater(plugin, 20L);
 		}
 	}
 
