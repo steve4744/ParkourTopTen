@@ -6,8 +6,6 @@ import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.type.Sign;
-import org.bukkit.block.data.type.WallSign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -30,21 +28,20 @@ public class ParkourTopTenCommand implements CommandExecutor {
 	}
 
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] arg3) {
+		if (arg3.length == 0 || arg3[0].equalsIgnoreCase("info")) {
+			sender.sendMessage(ChatColor.GREEN + "[ParkourTopTen] " + ChatColor.WHITE + "Version " + version + " : plugin by "+ ChatColor.AQUA + "steve4744");
+			return true;
+		}
 		if (!(sender instanceof Player)) {
 			sender.sendMessage(ChatColor.RED + "Command must be used in-game while looking at a row of signs.");
 			return true;
 		}
 		Player player = (Player)sender;
-
-		if (arg3.length > 0 && arg3[0].equalsIgnoreCase("info")) {
-			player.sendMessage(ChatColor.GREEN + "[ParkourTopTen] " + ChatColor.WHITE + "Version " + version + " : plugin by "+ ChatColor.AQUA + "steve4744");
-			return true;
-		}
 		if (!player.isOp() && !player.hasPermission("parkourtopten.admin")) {
-			sender.sendMessage(ChatColor.RED + "You must be OP or have parkourtopten.admin permission to use this command");
-			return true;
+			player.sendMessage(ChatColor.RED + "You must be OP or have parkourtopten.admin permission to use this command");
+			return false;
 		}
-		if (arg3.length == 0 || arg3[0].equalsIgnoreCase("help")) {
+		if (arg3[0].equalsIgnoreCase("help")) {
 			sendHelp(player);
 			return true;
 		}
@@ -52,11 +49,11 @@ public class ParkourTopTenCommand implements CommandExecutor {
 		if (arg3[0].equalsIgnoreCase("create")) {
 			if (arg3.length == 1) {
 				player.sendMessage(ChatColor.RED + "You must specify a Parkour course to display");
-				return true;
+				return false;
 			}
 			if (!Parkour.getInstance().getCourseManager().doesCourseExists(arg3[1])) {
 				player.sendMessage(ChatColor.RED + "Parkour course " + ChatColor.AQUA + arg3[1] + ChatColor.RED + " does not exist");
-				return true;
+				return false;
 			}
 
 			Block lastBlock = plugin.getBlockHandler().getTargetedBlock(player);
@@ -64,7 +61,7 @@ public class ParkourTopTenCommand implements CommandExecutor {
 			if (plugin.isDebug()) {
 				plugin.getLogger().info("DEBUG: [pttc] lastBlock = " + lastBlock);
 			}
-			if (!(lastBlock.getBlockData() instanceof WallSign) && !(lastBlock.getBlockData() instanceof Sign)) {
+			if (!plugin.getBlockHandler().isValidSign(lastBlock)) {
 				player.sendMessage(ChatColor.RED + "You must be looking at a sign to start");
 				return true;
 			}
@@ -134,7 +131,7 @@ public class ParkourTopTenCommand implements CommandExecutor {
 
 			Block lastBlock = plugin.getBlockHandler().getTargetedBlock(player);
 
-			if (!(lastBlock.getBlockData() instanceof WallSign) && !(lastBlock.getBlockData() instanceof Sign)) {
+			if (!plugin.getBlockHandler().isValidSign(lastBlock)) {
 				player.sendMessage(ChatColor.RED + "You must be looking at the #1 top ten sign");
 				return true;
 			}
