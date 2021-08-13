@@ -56,7 +56,7 @@ public class ParkourTopTenCommand implements CommandExecutor {
 				return false;
 			}
 
-			Block lastBlock = plugin.getBlockHandler().getTargetedBlock(player);
+			Block lastBlock = player.getTargetBlock(null, 10);
 
 			if (plugin.isDebug()) {
 				plugin.getLogger().info("DEBUG: [pttc] lastBlock = " + lastBlock);
@@ -129,7 +129,7 @@ public class ParkourTopTenCommand implements CommandExecutor {
 				return true;
 			}
 
-			Block lastBlock = plugin.getBlockHandler().getTargetedBlock(player);
+			Block lastBlock = player.getTargetBlock(null, 10);
 
 			if (!plugin.getBlockHandler().isValidSign(lastBlock)) {
 				player.sendMessage(ChatColor.RED + "You must be looking at the #1 top ten sign");

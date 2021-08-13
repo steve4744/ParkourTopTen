@@ -7,8 +7,6 @@ import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Rotatable;
 import org.bukkit.block.data.type.Sign;
 import org.bukkit.block.data.type.WallSign;
-import org.bukkit.entity.Player;
-import org.bukkit.util.BlockIterator;
 
 public class BlockHandler {
 
@@ -33,24 +31,6 @@ public class BlockHandler {
 			facing = rot.getRotation();
 		}
 		return facing;
-	}
-
-	/**
-	 * Get the block the player is looking at.
-	 * @param player
-	 * @return
-	 */
-	public Block getTargetedBlock(Player player) {
-		BlockIterator iter = new BlockIterator(player, 10);
-		Block block = iter.next();
-		while (iter.hasNext()) {
-			block = iter.next();
-			if (block.getType().isAir()) {
-				continue;
-			}
-			break;
-		}
-		return block;
 	}
 
 	/**
