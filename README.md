@@ -20,7 +20,7 @@ To remove ALL the ParkourTopTen displays, simply run the remove command with the
 ## Download
 ParkourTopTen can be [downloaded from Spigot](https://www.spigotmc.org/resources/parkour-top-ten.46268// "ParkourTopTen by steve4744")
 
-**Version 3.1 of ParkourTopTen requires a minimum of Java 16 and is only supported on Minecraft v1.17 and later.**
+**Version 3.1+ of ParkourTopTen requires a minimum of Java 16 and is only supported on Minecraft v1.17 and later.**
 
 **Version 3.0 of ParkourTopTen is only compatible with Parkour v6.0+ and Minecraft v1.13 to 1.16.5.**
 
@@ -43,5 +43,5 @@ A5H73Y for the excellent [Parkour](https://github.com/A5H73Y/Parkour) plugin.
 
 <br />
 <br />
-Updated steve4744 - 6th July 2021
+Updated steve4744 - 13th August 2021
 
