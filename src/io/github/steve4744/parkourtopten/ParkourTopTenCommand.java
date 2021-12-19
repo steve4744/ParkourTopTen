@@ -51,7 +51,7 @@ public class ParkourTopTenCommand implements CommandExecutor {
 				player.sendMessage(ChatColor.RED + "You must specify a Parkour course to display");
 				return false;
 			}
-			if (!Parkour.getInstance().getCourseManager().doesCourseExists(arg3[1])) {
+			if (!Parkour.getInstance().getCourseManager().doesCourseExist(arg3[1])) {
 				player.sendMessage(ChatColor.RED + "Parkour course " + ChatColor.AQUA + arg3[1] + ChatColor.RED + " does not exist");
 				return false;
 			}

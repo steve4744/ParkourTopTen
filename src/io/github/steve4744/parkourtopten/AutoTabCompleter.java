@@ -9,7 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-import io.github.a5h73y.parkour.type.course.CourseInfo;
+import io.github.a5h73y.parkour.Parkour;
 
 public class AutoTabCompleter implements TabCompleter {
 
@@ -33,7 +33,7 @@ public class AutoTabCompleter implements TabCompleter {
 			}
 		} else if (args.length == 2 && player.hasPermission("parkourtopten.admin")) {
 			if (args[0].equalsIgnoreCase("create")) {
-				list.addAll(CourseInfo.getAllCourseNames());
+				list.addAll(Parkour.getInstance().getCourseManager().getCourseNames());
 			}
 		}
 		for (String s : list) {

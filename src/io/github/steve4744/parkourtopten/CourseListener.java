@@ -19,7 +19,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import io.github.a5h73y.parkour.Parkour;
 import io.github.a5h73y.parkour.database.TimeEntry;
 import io.github.a5h73y.parkour.event.PlayerFinishCourseEvent;
-import io.github.a5h73y.parkour.utility.DateTimeUtils;
+import io.github.a5h73y.parkour.utility.PlayerUtils;
+import io.github.a5h73y.parkour.utility.time.DateTimeUtils;
 
 public class CourseListener implements Listener {
 
@@ -65,7 +66,7 @@ public class CourseListener implements Listener {
 		topTenLocation.getWorld().getChunkAt(topTenLocation).load();
         
 		// Get the top 10 times for the course
-		List<TimeEntry> topten = Parkour.getInstance().getDatabase().getTopBestTimes(courseName.toLowerCase(), 10);
+		List<TimeEntry> topten = Parkour.getInstance().getDatabaseManager().getTopBestTimes(courseName.toLowerCase(), 10);
 
 		int i = 0;
 		Block b = topTenLocation.getBlock();
@@ -77,7 +78,7 @@ public class CourseListener implements Listener {
 				plugin.getLogger().info("DEBUG: [dTT] " + i);
 				plugin.getLogger().info("DEBUG: [dTT] " + topten.get(i).getPlayerName());
 				plugin.getLogger().info("DEBUG: [dTT] " + topten.get(i).getPlayerId());
-				plugin.getLogger().info("DEBUG: [dTT] " + topten.get(i).getPlayerUuid());
+				plugin.getLogger().info("DEBUG: [dTT] " + PlayerUtils.padPlayerUuid(topten.get(i).getPlayerId()));
 				plugin.getLogger().info("DEBUG: [dTT] " + DateTimeUtils.displayCurrentTime(topten.get(i).getTime()));
 			}
 
@@ -111,7 +112,7 @@ public class CourseListener implements Listener {
 
 			// Set the owner
 			Skull skull = (Skull)headBlock.getState();
-			skull.setOwningPlayer(Bukkit.getOfflinePlayer(UUID.fromString(topten.get(i).getPlayerUuid())));
+			skull.setOwningPlayer(Bukkit.getOfflinePlayer(UUID.fromString(PlayerUtils.padPlayerUuid(topten.get(i).getPlayerId()))));
 			skull.update();
 
 			// Move to the next block
