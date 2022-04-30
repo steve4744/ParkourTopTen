@@ -18,7 +18,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import io.github.a5h73y.parkour.Parkour;
 import io.github.a5h73y.parkour.database.TimeEntry;
-import io.github.a5h73y.parkour.event.PlayerFinishCourseEvent;
+import io.github.a5h73y.parkour.event.ParkourFinishEvent;
 import io.github.a5h73y.parkour.utility.PlayerUtils;
 import io.github.a5h73y.parkour.utility.time.DateTimeUtils;
 
@@ -44,7 +44,7 @@ public class CourseListener implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
-	public void onCourseCompletion(PlayerFinishCourseEvent event) {
+	public void onCourseCompletion(ParkourFinishEvent event) {
 		String coursecompleted = event.getCourseName();
 		// Only update heads for course just completed
 		if (coursecompleted.equalsIgnoreCase(courseName)) {
