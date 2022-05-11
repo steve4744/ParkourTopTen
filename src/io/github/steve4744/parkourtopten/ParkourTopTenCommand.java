@@ -61,31 +61,21 @@ public class ParkourTopTenCommand implements CommandExecutor {
 			if (plugin.isDebug()) {
 				plugin.getLogger().info("DEBUG: [pttc] lastBlock = " + lastBlock);
 			}
-			if (!plugin.getBlockHandler().isValidSign(lastBlock)) {
+			if (!plugin.getSignHandler().isValidSign(lastBlock)) {
 				player.sendMessage(ChatColor.RED + "You must be looking at a sign to start");
 				return true;
 			}
 
 			BlockFace facing = plugin.getBlockHandler().getFacingDirection(lastBlock);
-			BlockFace right = null;
 
 			// Get the direction to the right
-			switch (facing) {
-			case EAST:
-				right = BlockFace.NORTH;
-				break;
-			case NORTH:
-				right = BlockFace.WEST;
-				break;
-			case SOUTH:
-				right = BlockFace.EAST;
-				break;
-			case WEST:
-				right = BlockFace.SOUTH;
-				break;
-			default:
-				break;
-			}
+			BlockFace right = switch(facing) {
+				case EAST  -> BlockFace.NORTH;
+				case NORTH -> BlockFace.WEST;
+				case SOUTH -> BlockFace.EAST;
+				case WEST  -> BlockFace.SOUTH;
+				default -> null;
+			};
 			if (right == null) {
 				player.sendMessage(ChatColor.RED + "Sign needs to face north, south, east or west");
 				return true;
@@ -131,7 +121,7 @@ public class ParkourTopTenCommand implements CommandExecutor {
 
 			Block lastBlock = player.getTargetBlock(null, 10);
 
-			if (!plugin.getBlockHandler().isValidSign(lastBlock)) {
+			if (!plugin.getSignHandler().isValidSign(lastBlock)) {
 				player.sendMessage(ChatColor.RED + "You must be looking at the #1 top ten sign");
 				return true;
 			}

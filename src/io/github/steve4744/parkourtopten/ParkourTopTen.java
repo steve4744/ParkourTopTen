@@ -16,6 +16,7 @@ public class ParkourTopTen extends JavaPlugin {
 	private ParkourTopTenCommand commandListener;
 	private String version;
 	private BlockHandler blockHandler;
+	private SignHandler signHandler;
 	private static final int BSTATS_PLUGIN_ID = 2147;
 
 	@Override
@@ -41,6 +42,7 @@ public class ParkourTopTen extends JavaPlugin {
 			getCommand("parkourtopten").setTabCompleter(new AutoTabCompleter());
 
 			blockHandler = new BlockHandler(this);
+			signHandler = new SignHandler(this);
 			checkForUpdate();
 			new Metrics(this, BSTATS_PLUGIN_ID);
 
@@ -108,6 +110,10 @@ public class ParkourTopTen extends JavaPlugin {
 
 	public BlockHandler getBlockHandler() {
 		return blockHandler;
+	}
+
+	public SignHandler getSignHandler() {
+		return signHandler;
 	}
 
 	public boolean isDebug() {

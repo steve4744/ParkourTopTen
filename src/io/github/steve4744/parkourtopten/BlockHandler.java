@@ -48,7 +48,4 @@ public class BlockHandler {
 		getHeadBlock(block).setType(Material.AIR);
 	}
 
-	public boolean isValidSign(Block block) {
-		return block.getBlockData() instanceof WallSign || block.getBlockData() instanceof Sign;
-	}
 }

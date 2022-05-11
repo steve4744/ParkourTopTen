@@ -13,13 +13,12 @@ import org.bukkit.World;
 public class Util {
 
     /**
-     * Converts a serialized location to a Location. Returns null if string is
-     * empty
-     * 
+     * Converts a serialized location to a Location.
+     * Returns null if string is empty.
+     *
      * @author tastybento
-     * 
-     * @param s
-     *            - serialized location in format "world:x:y:z"
+     *
+     * @param s serialized location in format "world:x:y:z"
      * @return Location
      */
     static public Location getLocationString(final String s) {
@@ -45,12 +44,12 @@ public class Util {
     }
 
     /**
-     * Converts a location to a simple string representation
-     * If location is null, returns empty string
-     * 
+     * Converts a location to a simple string representation.
+     * If location is null, returns empty string.
+     *
      * @author tastybento
-     * 
-     * @param l
+     *
+     * @param location
      * @return
      */
     static public String getStringLocation(final Location l) {

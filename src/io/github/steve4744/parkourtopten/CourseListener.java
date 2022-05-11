@@ -8,7 +8,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.Sign;
 import org.bukkit.block.Skull;
 import org.bukkit.block.data.Rotatable;
 import org.bukkit.event.EventHandler;
@@ -82,21 +81,16 @@ public class CourseListener implements Listener {
 				plugin.getLogger().info("DEBUG: [dTT] " + DateTimeUtils.displayCurrentTime(topten.get(i).getTime()));
 			}
 
-			// Get the block and move
-			if (!plugin.getBlockHandler().isValidSign(b)) {
-				// if there's no more signs then stop
+			// if there are no more valid signs then stop
+			if (!plugin.getSignHandler().isValidSign(b)) {
 				return;
 			}
 			if (plugin.getConfig().getBoolean("enforceSameSignType") && b.getType() != signType) {
 				return;
 			}
 
-			Sign sign = (Sign)b.getState();
-			sign.setLine(0, "#" + (i + 1));
-			sign.setLine(1, topten.get(i).getPlayerName());
-			sign.setLine(2, "Time: " + DateTimeUtils.displayCurrentTime(topten.get(i).getTime()));
-			sign.setLine(3, courseName);
-			sign.update();
+			plugin.getSignHandler().updateSign(b, i+1, topten.get(i).getPlayerName(),
+					DateTimeUtils.displayCurrentTime(topten.get(i).getTime()), courseName);
 
 			// Get the block above the block that the sign is attached to
 			Block headBlock = plugin.getBlockHandler().getHeadBlock(b);
@@ -121,19 +115,15 @@ public class CourseListener implements Listener {
 		// Less than 10 in the top ten
 		if (i < 10) {
 			for (int j = i+1; j < 11; j++) {
-				if (!plugin.getBlockHandler().isValidSign(b)) {
+				if (!plugin.getSignHandler().isValidSign(b)) {
 					// no more signs
 					return;
 				}
 				if (plugin.getConfig().getBoolean("enforceSameSignType") && b.getType() != signType) {
 					return;
 				}
-				Sign sign = (Sign)b.getState();
-				sign.setLine(0, "#" + j);
-				sign.setLine(1, "");
-				sign.setLine(2, "");
-				sign.setLine(3, courseName);
-				sign.update();
+
+				plugin.getSignHandler().updateSign(b, j, "", "", courseName);
 
 				plugin.getBlockHandler().removeHead(b);
 				b = b.getRelative(direction);
@@ -145,18 +135,14 @@ public class CourseListener implements Listener {
 		Block b = topTenLocation.getBlock();
 		Material signType = b.getType();
 		for (int j = 0; j < 10; j++) {
-			if (!plugin.getBlockHandler().isValidSign(b)) {
+			if (!plugin.getSignHandler().isValidSign(b)) {
 				return;
 			}
 			if (plugin.getConfig().getBoolean("enforceSameSignType") && b.getType() != signType) {
 				return;
 			}
-			Sign sign = (Sign)b.getState();
-			sign.setLine(0, "");
-			sign.setLine(1, "");
-			sign.setLine(2, "");
-			sign.setLine(3, "");
-			sign.update();
+
+			plugin.getSignHandler().resetSign(b);
 
 			plugin.getBlockHandler().removeHead(b);
 			b = b.getRelative(direction);
