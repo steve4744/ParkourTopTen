@@ -109,6 +109,7 @@ public class ParkourTopTenCommand implements CommandExecutor {
 				for (CourseListener panel : topTen) {
 					// Clear each panel
 					panel.removeTopTen();
+					panel.setTopTenLocation(null);
 				}
 				// Remove all from the list
 				topTen.removeAll(topTen);
@@ -128,9 +129,12 @@ public class ParkourTopTenCommand implements CommandExecutor {
 			// Check if this panel  exists
 			for (CourseListener panel : topTen) {
 				if (panel.getTopTenLocation().equals(lastBlock.getLocation())) {
+					// Remove the display
 					panel.removeTopTen();
 					// Remove from the list
 					topTen.remove(panel);
+					// Prevent the display from being recreated
+					panel.setTopTenLocation(null);
 					player.sendMessage(ChatColor.GREEN + "ParkourTopTen display removed");
 					return true;
 				}
