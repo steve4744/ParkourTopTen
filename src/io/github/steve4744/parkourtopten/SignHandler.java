@@ -27,10 +27,10 @@ public class SignHandler {
 
 	public void updateSign(Block block, int index, String playerName, String time, String courseName) {
 		Sign sign = (Sign)block.getState();
-		sign.setLine(0, "#" + index);
-		sign.setLine(1, playerName);
-		sign.setLine(2, "Time: " + time);
-		sign.setLine(3, courseName);
+		sign.setLine(0, Util.colourText(plugin.getConfig().getString("signs.line0", "#")) + index);
+		sign.setLine(1, Util.colourText(plugin.getConfig().getString("signs.line1", "")) + playerName);
+		sign.setLine(2, Util.colourText(plugin.getConfig().getString("signs.line2", "")) + time);
+		sign.setLine(3, Util.colourText(plugin.getConfig().getString("signs.line3", "")) + courseName);
 		sign.update();
 	}
 }

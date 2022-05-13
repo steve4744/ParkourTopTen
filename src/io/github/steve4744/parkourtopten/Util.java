@@ -1,18 +1,33 @@
 package io.github.steve4744.parkourtopten;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 
-/**
- * A set of utility methods
- * 
- * @author tastybento
- * 
- */
+import net.md_5.bungee.api.ChatColor;
+
 public class Util {
 
-    /**
+	private final static Pattern HEXCOLOUR = Pattern.compile("<#([A-Fa-f0-9]){6}>");
+
+	public static String colourText(String message) {
+
+		Matcher matcher = HEXCOLOUR.matcher(message);
+		while (matcher.find()) {
+			StringBuilder sb = new StringBuilder();
+			final ChatColor hexColour = ChatColor.of(matcher.group().substring(1, matcher.group().length() - 1));
+			sb.append(message.substring(0, matcher.start())).append(hexColour).append(message.substring(matcher.end()));
+			message = sb.toString();
+			matcher = HEXCOLOUR.matcher(message);
+		}
+
+		return ChatColor.translateAlternateColorCodes('&', message);
+	}
+
+	/**
      * Converts a serialized location to a Location.
      * Returns null if string is empty.
      *

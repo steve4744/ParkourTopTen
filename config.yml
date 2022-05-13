@@ -1,10 +1,23 @@
-# Configuration file for ParkourTopTen
-#
+################################################################ #
+#               ParkourTopTen configuration file                  #
+#                                                                 #
+# Create a top ten display of player heads for Parkour courses.   #
+#                                                                 #
+# Author: steve4744                                               #
+################################################################ #
+
 # Set this to true if you want the head placed above the sign rather than on top of the block the sign is attached to.
 placeHeadAboveSign: false
 # If true, all signs in a display must use the same sign type
 enforceSameSignType: false
 # On startup, check for new release on SpigotMC.org
 checkForUpdate: true
+# Sign configuration.
+# Supports RGB/Hex colours, e.g. line0: '<#ff11aa>#'
+signs:
+  line0: '&b#'
+  line1: '&a'
+  line2: '&fTime: &b'
+  line3: '&a'
 # If true, log verbose messages to console
 debug: false
