@@ -18,6 +18,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import io.github.a5h73y.parkour.Parkour;
 import io.github.a5h73y.parkour.database.TimeEntry;
 import io.github.a5h73y.parkour.event.ParkourFinishEvent;
+import io.github.a5h73y.parkour.event.ParkourResetCourseEvent;
 import io.github.a5h73y.parkour.utility.PlayerUtils;
 import io.github.a5h73y.parkour.utility.time.DateTimeUtils;
 
@@ -51,6 +52,20 @@ public class CourseListener implements Listener {
 				@Override
 				public void run() {
 					displayTopTen();
+				}
+			}.runTaskLater(plugin, 20L);
+		}
+	}
+
+	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+	public void onCourseReset(ParkourResetCourseEvent event) {
+		String coursecompleted = event.getCourseName();
+		// Only update heads for course just completed
+		if (coursecompleted.equalsIgnoreCase(courseName)) {
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					removeTopTen();
 				}
 			}.runTaskLater(plugin, 20L);
 		}
@@ -132,6 +147,9 @@ public class CourseListener implements Listener {
 	}
 
 	public void removeTopTen() {
+		if (topTenLocation == null) {
+			return;
+		}
 		Block b = topTenLocation.getBlock();
 		Material signType = b.getType();
 		for (int j = 0; j < 10; j++) {
