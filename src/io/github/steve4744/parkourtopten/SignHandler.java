@@ -1,5 +1,6 @@
 package io.github.steve4744.parkourtopten;
 
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.type.WallSign;
@@ -14,6 +15,13 @@ public class SignHandler {
 
 	public boolean isValidSign(Block block) {
 		return block.getBlockData() instanceof WallSign || block.getBlockData() instanceof org.bukkit.block.data.type.Sign;
+	}
+
+	public boolean isSameSignType(Block block, Material signType) {
+		if (plugin.getConfig().getBoolean("enforceSameSignType") && block.getType() != signType) {
+			return false;
+		}
+		return true;
 	}
 
 	public void resetSign(Block block) {

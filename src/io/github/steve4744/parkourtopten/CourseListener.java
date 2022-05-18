@@ -19,6 +19,8 @@ import io.github.a5h73y.parkour.Parkour;
 import io.github.a5h73y.parkour.database.TimeEntry;
 import io.github.a5h73y.parkour.event.ParkourFinishEvent;
 import io.github.a5h73y.parkour.event.ParkourResetCourseEvent;
+import io.github.a5h73y.parkour.event.ParkourResetLeaderboardEvent;
+import io.github.a5h73y.parkour.event.ParkourResetPlayerEvent;
 import io.github.a5h73y.parkour.utility.PlayerUtils;
 import io.github.a5h73y.parkour.utility.time.DateTimeUtils;
 
@@ -45,30 +47,38 @@ public class CourseListener implements Listener {
 
 	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
 	public void onCourseCompletion(ParkourFinishEvent event) {
-		String coursecompleted = event.getCourseName();
 		// Only update heads for course just completed
-		if (coursecompleted.equalsIgnoreCase(courseName)) {
-			new BukkitRunnable() {
-				@Override
-				public void run() {
-					displayTopTen();
-				}
-			}.runTaskLater(plugin, 20L);
+		if (event.getCourseName().equalsIgnoreCase(courseName)) {
+			updateTopTen();
 		}
 	}
 
 	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
 	public void onCourseReset(ParkourResetCourseEvent event) {
-		String coursecompleted = event.getCourseName();
-		// Only update heads for course just completed
-		if (coursecompleted.equalsIgnoreCase(courseName)) {
-			new BukkitRunnable() {
-				@Override
-				public void run() {
-					removeTopTen();
-				}
-			}.runTaskLater(plugin, 20L);
+		if (event.getCourseName().equalsIgnoreCase(courseName)) {
+			updateTopTen();
 		}
+	}
+
+	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+	public void onPlayerReset(ParkourResetPlayerEvent event) {
+		updateTopTen();
+	}
+
+	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+	public void onLeaderboardReset(ParkourResetLeaderboardEvent event) {
+		if (event.getCourseName().equalsIgnoreCase(courseName)) {
+			updateTopTen();
+		}
+	}
+
+	private void updateTopTen() {
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				displayTopTen();
+			}
+		}.runTaskLater(plugin, 20L);
 	}
 
 	public void displayTopTen() {
@@ -100,7 +110,7 @@ public class CourseListener implements Listener {
 			if (!plugin.getSignHandler().isValidSign(b)) {
 				return;
 			}
-			if (plugin.getConfig().getBoolean("enforceSameSignType") && b.getType() != signType) {
+			if (!plugin.getSignHandler().isSameSignType(b, signType)) {
 				return;
 			}
 
@@ -134,12 +144,11 @@ public class CourseListener implements Listener {
 					// no more signs
 					return;
 				}
-				if (plugin.getConfig().getBoolean("enforceSameSignType") && b.getType() != signType) {
+				if (!plugin.getSignHandler().isSameSignType(b, signType)) {
 					return;
 				}
 
 				plugin.getSignHandler().updateSign(b, j, "", "", courseName);
-
 				plugin.getBlockHandler().removeHead(b);
 				b = b.getRelative(direction);
 			}
@@ -156,12 +165,11 @@ public class CourseListener implements Listener {
 			if (!plugin.getSignHandler().isValidSign(b)) {
 				return;
 			}
-			if (plugin.getConfig().getBoolean("enforceSameSignType") && b.getType() != signType) {
+			if (!plugin.getSignHandler().isSameSignType(b, signType)) {
 				return;
 			}
 
 			plugin.getSignHandler().resetSign(b);
-
 			plugin.getBlockHandler().removeHead(b);
 			b = b.getRelative(direction);
 		}
