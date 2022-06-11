@@ -1,4 +1,4 @@
-![alt text](https://www.spigotmc.org/attachments/2019-02-25_11-50-03-png.407332/ "Parkour Top Ten")
+![alt text](https://user-images.githubusercontent.com/6975392/173207544-eb402a75-f293-4eb2-92eb-f3ff94855ecc.png "Parkour Top Ten by steve4744")
 
 # Parkour Top Ten
 
@@ -20,11 +20,13 @@ To remove ALL the ParkourTopTen displays, simply run the remove command with the
 ## Download
 ParkourTopTen can be [downloaded from Spigot](https://www.spigotmc.org/resources/parkour-top-ten.46268// "ParkourTopTen by steve4744")
 
-**Version 3.1+ of ParkourTopTen requires a minimum of Java 16 and is only supported on Minecraft v1.17 and later.**
+**Version 4.0 of ParkourTopTen requires a minimum of Java 16, Parkour 7.0 and Minecraft 1.17-1.19.**
+
+**Version 3.2 of ParkourTopTen requires a minimum of Java 16 and is only supported on Minecraft v1.17 and later.**
 
 **Version 3.0 of ParkourTopTen is only compatible with Parkour v6.0+ and Minecraft v1.13 to 1.16.5.**
 
-The versions compatible with Parkour v5.3 are no longer supported. Please upgrade to Parkour v6.
+The versions compatible with Parkour v5.3 are no longer supported. Please upgrade to Parkour v7.
 
 ## Installation
 * Download ParkourTopTen.jar
@@ -43,5 +45,5 @@ A5H73Y for the excellent [Parkour](https://github.com/A5H73Y/Parkour) plugin.
 
 <br />
 <br />
-Updated steve4744 - 13th August 2021
+Updated steve4744 - 10th June 2022
 
