@@ -88,7 +88,9 @@ public class CourseListener implements Listener {
 		}
 		// Ensure the chunk is loaded
 		if (!topTenLocation.getWorld().getChunkAt(topTenLocation).isLoaded()) {
-			plugin.getLogger().info("DEBUG: [dTT] Loading chunk at " + topTenLocation);
+			if (plugin.isDebug()) {
+				plugin.getLogger().info("DEBUG: [dTT] Loading chunk at " + topTenLocation);
+			}
 			topTenLocation.getWorld().getChunkAt(topTenLocation).load();
 		}
 		// Get the top 10 times for the course
