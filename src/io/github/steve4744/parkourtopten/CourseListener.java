@@ -87,8 +87,10 @@ public class CourseListener implements Listener {
 			return;
 		}
 		// Ensure the chunk is loaded
-		topTenLocation.getWorld().getChunkAt(topTenLocation).load();
-        
+		if (!topTenLocation.getWorld().getChunkAt(topTenLocation).isLoaded()) {
+			plugin.getLogger().info("DEBUG: [dTT] Loading chunk at " + topTenLocation);
+			topTenLocation.getWorld().getChunkAt(topTenLocation).load();
+		}
 		// Get the top 10 times for the course
 		List<TimeEntry> topten = Parkour.getInstance().getDatabaseManager().getTopBestTimes(courseName.toLowerCase(), 10);
 
