@@ -13,10 +13,14 @@ import org.bukkit.block.Skull;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import io.github.a5h73y.parkour.Parkour;
 import io.github.a5h73y.parkour.database.TimeEntry;
 import io.github.a5h73y.parkour.event.ParkourFinishEvent;
+import io.github.a5h73y.parkour.event.ParkourResetCourseEvent;
+import io.github.a5h73y.parkour.event.ParkourResetLeaderboardEvent;
+import io.github.a5h73y.parkour.event.ParkourResetPlayerEvent;
 import io.github.a5h73y.parkour.utility.time.DateTimeUtils;
 
 public class CourseListener implements Listener {
@@ -40,15 +44,43 @@ public class CourseListener implements Listener {
         this.courseName = courseName;
         displayTopTen();
     }
-    
+
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onCourseCompletion(ParkourFinishEvent event) {
     	String coursecompleted = event.getCourseName();
     	// Only update heads for course just completed
     	if (coursecompleted.equalsIgnoreCase(courseName)) {
-    		displayTopTen();
+    		updateTopTen();
     	}
     }
+
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+	public void onCourseReset(ParkourResetCourseEvent event) {
+		if (event.getCourseName().equalsIgnoreCase(courseName)) {
+			updateTopTen();
+		}
+	}
+
+	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+	public void onPlayerReset(ParkourResetPlayerEvent event) {
+		updateTopTen();
+	}
+
+	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+	public void onLeaderboardReset(ParkourResetLeaderboardEvent event) {
+		if (event.getCourseName().equalsIgnoreCase(courseName)) {
+			updateTopTen();
+		}
+	}
+
+	private void updateTopTen() {
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				displayTopTen();
+			}
+		}.runTaskLater(plugin, 20L);
+	}
 
     @SuppressWarnings("deprecation")
 	public void displayTopTen() {
@@ -58,11 +90,11 @@ public class CourseListener implements Listener {
         }
         // Get the top 10 times for the course
         List<TimeEntry> topten = Parkour.getInstance().getDatabaseManager().getTopCourseResults(courseName, 10);
-        
+
         // Display the top ten heads
         int i = 0;
         Block b = topTenLocation.getBlock();
-        
+
         for (i = 0; i < topten.size(); ) {
             String name = topten.get(i).getPlayerName(); 
             String time = DateTimeUtils.displayCurrentTime(topten.get(i).getTime());
@@ -70,7 +102,7 @@ public class CourseListener implements Listener {
             //plugin.getLogger().info("DEBUG: [dTT] " + i);
             //plugin.getLogger().info("DEBUG: [dTT] " + name);
             //plugin.getLogger().info("DEBUG: [dTT] " + time);
-            
+
             // Get the block and move
             BlockFace directionFacing;
             if (b.getType() == Material.WALL_SIGN || b.getType() == Material.SIGN_POST) {
@@ -84,7 +116,7 @@ public class CourseListener implements Listener {
                 sign.setLine(2, "Time: " + time);
                 sign.setLine(3, courseName);
                 sign.update();
-                
+
                 // Place head
                 BlockFace opp = directionFacing.getOppositeFace();
                 Block attachToBlock = b.getRelative(BlockFace.UP).getRelative(opp);
@@ -92,7 +124,7 @@ public class CourseListener implements Listener {
                 if (attachToBlock.getType() != Material.SKULL) {
                 	attachToBlock.setType(Material.SKULL);
                 }
-                
+
                 Skull skull = (Skull)attachToBlock.getState();
                 skull.setRotation(directionFacing);
                 skull.setSkullType(SkullType.PLAYER);
@@ -126,7 +158,7 @@ public class CourseListener implements Listener {
                     sign.setLine(2, "");
                     sign.setLine(3, "");
                     sign.update();
-                    
+
                     // Place head
                     BlockFace opp = directionFacing.getOppositeFace();
                     Block attachToBlock = b.getRelative(BlockFace.UP).getRelative(opp);
@@ -153,7 +185,7 @@ public class CourseListener implements Listener {
                 sign.setLine(2, "");
                 sign.setLine(3, "");
                 sign.update();
-                
+
                 // Place head
                 BlockFace opp = directionFacing.getOppositeFace();
                 Block attachToBlock = b.getRelative(BlockFace.UP).getRelative(opp);
@@ -178,7 +210,7 @@ public class CourseListener implements Listener {
     public BlockFace getDirection() {
         return direction;
     }
-    
+
     /**
      * @return the course name
      */
@@ -199,12 +231,12 @@ public class CourseListener implements Listener {
     public void setDirection(BlockFace direction) {
         this.direction = direction;
     }
-    
+
     /**
      * @param course name to set
      */
     public void setCourseName(String courseName) {
         this.courseName = courseName;
     }
- 
+
 }
