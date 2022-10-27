@@ -14,8 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.material.Sign;
 import org.bukkit.util.BlockIterator;
 
-import me.A5H73Y.Parkour.Course.CourseMethods;
-
+import io.github.a5h73y.parkour.Parkour;
 
 public class ParkourTopTenCommand implements CommandExecutor {
     private ParkourTopTen plugin;
@@ -49,7 +48,7 @@ public class ParkourTopTenCommand implements CommandExecutor {
             		sender.sendMessage(ChatColor.RED + "You must specify a Parkour course to display");
             		return true;
             	}
-                if (!CourseMethods.exist(arg3[1])) {
+                if (!Parkour.getInstance().getCourseManager().doesCourseExist(arg3[1])) {
                 	sender.sendMessage(ChatColor.RED + "Parkour course " + ChatColor.AQUA + arg3[1] + ChatColor.RED + " does not exist");
                 	return true;
                 }

@@ -14,10 +14,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
-import me.A5H73Y.Parkour.Other.TimeObject;
-import me.A5H73Y.Parkour.ParkourEvents.PlayerFinishCourseEvent;
-import me.A5H73Y.Parkour.Utilities.DatabaseMethods;
-import me.A5H73Y.Parkour.Utilities.Utils;
+import io.github.a5h73y.parkour.Parkour;
+import io.github.a5h73y.parkour.database.TimeEntry;
+import io.github.a5h73y.parkour.event.ParkourFinishEvent;
+import io.github.a5h73y.parkour.utility.time.DateTimeUtils;
 
 public class CourseListener implements Listener {
 
@@ -42,7 +42,7 @@ public class CourseListener implements Listener {
     }
     
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
-    public void onCourseCompletion(PlayerFinishCourseEvent event) {
+    public void onCourseCompletion(ParkourFinishEvent event) {
     	String coursecompleted = event.getCourseName();
     	// Only update heads for course just completed
     	if (coursecompleted.equalsIgnoreCase(courseName)) {
@@ -56,15 +56,15 @@ public class CourseListener implements Listener {
             return;
         }
         // Get the top 10 times for the course
-        List<TimeObject> topten = DatabaseMethods.getTopCourseResults(courseName, 10);
+        List<TimeEntry> topten = Parkour.getInstance().getDatabaseManager().getTopCourseResults(courseName, 10);
         
         // Display the top ten heads
         int i = 0;
         Block b = topTenLocation.getBlock();
         
         for (i = 0; i < topten.size(); ) {
-            String name = topten.get(i).getPlayer(); 
-            String time = Utils.displayCurrentTime(topten.get(i).getTime());
+            String name = topten.get(i).getPlayerName(); 
+            String time = DateTimeUtils.displayCurrentTime(topten.get(i).getTime());
             i++;
             //plugin.getLogger().info("DEBUG: [dTT] " + i);
             //plugin.getLogger().info("DEBUG: [dTT] " + name);
