@@ -12,10 +12,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import io.github.steve4744.ParkourTopTen.Metrics.Metrics;
 
-
 public class ParkourTopTen extends JavaPlugin {
     private ParkourTopTenCommand commandListener;
     private String version;
+    private static final int BSTATS_PLUGIN_ID = 2147;
 
     @Override
     public void onEnable() {
@@ -25,28 +25,25 @@ public class ParkourTopTen extends JavaPlugin {
         if (pkr == null) {
             getLogger().severe("Parkour not loaded. Disabling plugin");
             pm.disablePlugin(this);
-            
+
         } else {
             getLogger().info("Found Parkour version " + pkr.getDescription().getVersion());
-            // Load config
             saveDefaultConfig();
-            
-            // Register command
+
             commandListener = new ParkourTopTenCommand(this);
             getCommand("parkourtopten").setExecutor(commandListener);
-            
+
             version = this.getDescription().getVersion();
-            
+
             // check for new version
             checkForUpdate();
-            
+
             // Metrics
-            @SuppressWarnings("unused")
-			Metrics metrics = new Metrics(this);
-            
+            new Metrics(this, BSTATS_PLUGIN_ID);
+
             // Load from config
             getServer().getScheduler().runTaskLater(this, new Runnable() {
-
+            	@Override
                 public void run() {
                     reload();	
                 }}, 20L);
@@ -77,33 +74,34 @@ public class ParkourTopTen extends JavaPlugin {
                 String direction = panel.substring(panel.lastIndexOf(':')+1);
                 //getLogger().info("DEBUG: direction = " + direction);
                 BlockFace dir = BlockFace.valueOf(direction);
-                
+
                 String location = panel.substring(panel.indexOf(':')+1, panel.lastIndexOf(':'));
                 //getLogger().info("DEBUG: location = " + location);
                 Location loc = Util.getLocationString(location);
                 //getLogger().info("DEBUG: loc = " + loc);
-                
+
                 String course = panel.substring(0, panel.indexOf(':'));
                 //getLogger().info("DEBUG: course = " + course);
-                
+
                 CourseListener newTopTen = new CourseListener(this, loc, dir, course);
-            
+
                 commandListener.addTopTen(newTopTen);
                 getServer().getPluginManager().registerEvents(newTopTen, this);
                 //getLogger().info("DEBUG: new topten panel at " + loc + " heading " + dir + " for " + course);
-                
+
             } catch(Exception e) {
                 getLogger().severe("Problem loading panel " + panel + " skipping...");
                 e.printStackTrace();
             }
         }
     }
-    
+
 	public void checkForUpdate() {
 		if(!getConfig().getBoolean("Check_For_Update", true)){
 			return;
 		}
 		Bukkit.getScheduler().runTaskLaterAsynchronously(this, new Runnable() {
+			@Override
 			public void run() {
 				String latestVersion = VersionChecker.getVersion();
 				if (latestVersion == "error") {

@@ -50,7 +50,8 @@ public class CourseListener implements Listener {
     	}
     }
 
-    public void displayTopTen() {
+    @SuppressWarnings("deprecation")
+	public void displayTopTen() {
         if (topTenLocation == null) {
             plugin.getLogger().severe("The location of the top ten world does not exist. Maybe a world was deleted?");
             return;
