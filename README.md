@@ -23,7 +23,7 @@ To remove ALL the ParkourTopTen displays, simply run the remove command with the
 * Restart your server - this will create the default (initially empty) config.yml
 
 ## Notes
-1. The legacy version (1.4.2) of ParkourTopTen (for Minecraft versions 1.8 to 1.12.2) requires Parkour 7.x and a minimu of Java 11. Download version 1.4.2 from the Releases tab.
+1. The legacy version (1.4.2) of ParkourTopTen (for Minecraft versions 1.8 to 1.12.2) requires Parkour 7.x and a minimum of Java 11. Download version 1.4.2 from the Releases tab.
 2. You may occasionally get a skull in place of a player head. In this case, run "/ptt remove" and "/ptt create (course)" again. This will usually fix it.
 3. Remember to protect the heads display using Worldguard or some other tool.
 4. If you prefer the player heads to sit directly on top of the block rather than suspended, then place a skull on each of the blocks before running the create command.
