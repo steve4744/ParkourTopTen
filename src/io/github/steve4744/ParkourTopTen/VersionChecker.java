@@ -11,16 +11,16 @@ public class VersionChecker {
 	
 	public static String getVersion(){
 		try {
-			HttpURLConnection con = (HttpURLConnection) new URL("https://www.spigotmc.org/api/general.php").openConnection();
+			HttpURLConnection con = (HttpURLConnection) new URL("https://api.spigotmc.org/legacy/update.php?resource=46268").openConnection();
 			con.setDoOutput(true);
-			con.setRequestMethod("POST");
-			con.getOutputStream().write(("key=98BE0FE67F88AB82B4C197FAF1DC3B69206EFDCC4D3B80FC83A00037510B99B4&resource=46268").getBytes("UTF-8"));
+			con.setRequestMethod("GET");
 			String version = new BufferedReader(new InputStreamReader(con.getInputStream())).readLine();
+			con.disconnect();
 			if (version.length() <= 7) {
 				return version;
 			}
 		} catch (Exception ex) {
-			Bukkit.getLogger().info("Failed to check for update on Spigot.");
+			Bukkit.getLogger().info("[ParkourTopTen] Failed to check for update on Spigot.");
 		}
 		return "error";
 	}
