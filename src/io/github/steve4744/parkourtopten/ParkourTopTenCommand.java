@@ -59,7 +59,7 @@ public class ParkourTopTenCommand implements CommandExecutor {
 			Block lastBlock = player.getTargetBlock(null, 10);
 
 			if (plugin.isDebug()) {
-				plugin.getLogger().info("DEBUG: [pttc] lastBlock = " + lastBlock);
+				plugin.getLogger().info("DEBUG: [pTTC] lastBlock = " + lastBlock);
 			}
 			if (!plugin.getSignHandler().isValidSign(lastBlock)) {
 				player.sendMessage(ChatColor.RED + "You must be looking at a sign to start");
@@ -84,7 +84,6 @@ public class ParkourTopTenCommand implements CommandExecutor {
 			// Check if this panel already exists
 			for (CourseListener panel : topTen) {
 				if (panel.getTopTenLocation().equals(lastBlock.getLocation())) {
-					panel.setDirection(right);
 					player.sendMessage(ChatColor.RED + "ParkourTopTen display is already active");
 					return true;
 				}
@@ -94,6 +93,7 @@ public class ParkourTopTenCommand implements CommandExecutor {
 			topTen.add(newTopTen);
 			plugin.getServer().getPluginManager().registerEvents(newTopTen, plugin);
 			player.sendMessage(ChatColor.GREEN + "ParkourTopTen heads created for course " + ChatColor.AQUA + arg3[1]);
+			plugin.saveDisplays();
 			return true;
 
 		} else if (arg3[0].equalsIgnoreCase("remove")) {
@@ -113,6 +113,7 @@ public class ParkourTopTenCommand implements CommandExecutor {
 				}
 				// Remove all from the list
 				topTen.removeAll(topTen);
+				plugin.saveDisplays();
 				return true;
 			}
 			if (arg3.length == 2 && arg3[1].equalsIgnoreCase("help")) {
@@ -136,6 +137,7 @@ public class ParkourTopTenCommand implements CommandExecutor {
 					// Prevent the display from being recreated
 					panel.setTopTenLocation(null);
 					player.sendMessage(ChatColor.GREEN + "ParkourTopTen display removed");
+					plugin.saveDisplays();
 					return true;
 				}
 			}

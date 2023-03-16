@@ -58,11 +58,6 @@ public class ParkourTopTen extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
-		if (commandListener == null) {
-			return;
-		}
-		saveDisplays();
-		blockHandler = null;
 	}
 
 	private void reload() {
@@ -82,8 +77,8 @@ public class ParkourTopTen extends JavaPlugin {
 
 				String course = panel.substring(0, panel.indexOf(':'));
 
-				if (isDebug() ) {
-					getLogger().info("DEBUG: [ptt] new topten panel at " + loc + " heading " + dir + " for " + course);
+				if (isDebug()) {
+					getLogger().info("DEBUG: [pTT] new top ten panel at " + loc + " heading " + dir + " for " + course);
 				}
 
 				CourseListener newTopTen = new CourseListener(this, loc, dir, course);
@@ -96,13 +91,19 @@ public class ParkourTopTen extends JavaPlugin {
 				e.printStackTrace();
 			}
 		}
+		getLogger().info("Loaded " + commandListener.getTopTen().size() + " top ten displays");
 	}
 
 	public void saveDisplays() {
-		List<CourseListener> topTen = commandListener.getTopTen();
-		List<String> serialize = new ArrayList<String>();
-		for (CourseListener panel : topTen) {
+		if (isDebug()) {
+			getLogger().info("DEBUG: [pTT] displays to save: " + commandListener.getTopTen().size());
+		}
+		List<String> serialize = new ArrayList<>();
+		for (CourseListener panel : commandListener.getTopTen()) {
 			serialize.add(panel.getCourseName() + ":" + Util.getStringLocation(panel.getTopTenLocation()) + ":" + panel.getDirection().toString());
+		}
+		if (isDebug()) {
+			getLogger().info("DEBUG: [pTT] panels serialized: " + serialize.size());
 		}
 		getConfig().set("panels", serialize);
 		saveConfig();
