@@ -1,9 +1,10 @@
 package io.github.steve4744.parkourtopten;
 
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
-import org.bukkit.block.data.type.WallSign;
+import org.bukkit.block.sign.Side;
 
 public class SignHandler {
 
@@ -14,7 +15,7 @@ public class SignHandler {
 	}
 
 	public boolean isValidSign(Block block) {
-		return block.getBlockData() instanceof WallSign || block.getBlockData() instanceof org.bukkit.block.data.type.Sign;
+		return Tag.ALL_SIGNS.isTagged(block.getType());
 	}
 
 	public boolean isSameSignType(Block block, Material signType) {
@@ -26,19 +27,19 @@ public class SignHandler {
 
 	public void resetSign(Block block) {
 		Sign sign = (Sign)block.getState();
-		sign.setLine(0, "");
-		sign.setLine(1, "");
-		sign.setLine(2, "");
-		sign.setLine(3, "");
+		sign.getSide(Side.FRONT).setLine(0, "");
+		sign.getSide(Side.FRONT).setLine(1, "");
+		sign.getSide(Side.FRONT).setLine(2, "");
+		sign.getSide(Side.FRONT).setLine(3, "");
 		sign.update();
 	}
 
 	public void updateSign(Block block, int index, String playerName, String time, String courseName) {
 		Sign sign = (Sign)block.getState();
-		sign.setLine(0, Util.colourText(plugin.getConfig().getString("signs.line0", "#")) + index);
-		sign.setLine(1, Util.colourText(plugin.getConfig().getString("signs.line1", "")) + playerName);
-		sign.setLine(2, Util.colourText(plugin.getConfig().getString("signs.line2", "")) + time);
-		sign.setLine(3, Util.colourText(plugin.getConfig().getString("signs.line3", "")) + courseName);
+		sign.getSide(Side.FRONT).setLine(0, Util.colourText(plugin.getConfig().getString("signs.line0", "#")) + index);
+		sign.getSide(Side.FRONT).setLine(1, Util.colourText(plugin.getConfig().getString("signs.line1", "")) + playerName);
+		sign.getSide(Side.FRONT).setLine(2, Util.colourText(plugin.getConfig().getString("signs.line2", "")) + time);
+		sign.getSide(Side.FRONT).setLine(3, Util.colourText(plugin.getConfig().getString("signs.line3", "")) + courseName);
 		sign.update();
 	}
 }
