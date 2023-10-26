@@ -4,6 +4,8 @@
 
 ParkourTopTen will display the heads of the players with the fastest times for a particular Parkour course. The head is displayed above a sign displaying the player's name and time for the course. The number of heads displayed is determined by the number of signs created (minimum 1, maximum 10).
 
+All sign types are supported including hanging signs. Heads can be displayed either on the block behind the sign or directly above the sign.
+
 The display of heads for a course will be automatically updated/refreshed whenever the course is successfully completed by a player.
 
 To create a ParkourTopTen display for a course, first create a row of signs - any number between 1 and 10. Then, standing in front of and looking at the left most sign, run the create command - see below.
@@ -15,12 +17,15 @@ To remove ALL the ParkourTopTen displays, simply run the remove command with the
 * /ptt create [course] - create a ParkourTopTen display for the specified course
 * /ptt remove - remove the ParkourTopTen display
 * /ptt remove all - remove all the ParkourTopTen displays from the server
+* /ptt reload - reload the  _config.yml_  file
 * /ptt help - help on running ParkourTopTen commands
 
 ## Download
-ParkourTopTen can be [downloaded from Spigot](https://www.spigotmc.org/resources/parkour-top-ten.46268// "ParkourTopTen by steve4744")
+ParkourTopTen can be [downloaded from Spigot.](https://www.spigotmc.org/resources/parkour-top-ten.46268// "ParkourTopTen by steve4744")
 
-**Version 4.1 of ParkourTopTen requires a minimum of Java 17, Parkour v7.0+ and Minecraft 1.17-1.19.**
+**Version 4.2 of ParkourTopTen requires a minimum of Java 17, Parkour v7.0+ and Minecraft 1.20.2 and later.**
+
+**Version 4.1 of ParkourTopTen requires a minimum of Java 17, Parkour v7.0+ and Minecraft 1.17-1.20.1.**
 
 **Version 4.0 of ParkourTopTen requires a minimum of Java 16, Parkour v7.0+ and Minecraft 1.17-1.19.**
 
@@ -33,7 +38,7 @@ The versions compatible with Parkour v5.3 are no longer supported. Please upgrad
 ## Installation
 * Download ParkourTopTen.jar
 * Copy to your 'plugins' folder
-* Restart your server - this will create the default (initially empty) config.yml
+* Restart your server - this will create the default config.yml file
 
 ## Notes
 1. You may occasionally get a skull in place of a player head. In this case, run "/ptt remove" and "/ptt create (course)" again. This will usually fix it.
@@ -47,5 +52,5 @@ A5H73Y for the excellent [Parkour](https://github.com/A5H73Y/Parkour) plugin.
 
 <br />
 <br />
-Updated steve4744 - 16th March 2023
+Updated steve4744 - 26th October 2023
 
