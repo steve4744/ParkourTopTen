@@ -31,6 +31,7 @@ public class SignHandler {
 		sign.getSide(Side.FRONT).setLine(1, "");
 		sign.getSide(Side.FRONT).setLine(2, "");
 		sign.getSide(Side.FRONT).setLine(3, "");
+		sign.setWaxed(false);
 		sign.update();
 	}
 
@@ -40,6 +41,7 @@ public class SignHandler {
 		sign.getSide(Side.FRONT).setLine(1, Util.colourText(plugin.getConfig().getString("signs.line1", "")) + playerName);
 		sign.getSide(Side.FRONT).setLine(2, Util.colourText(plugin.getConfig().getString("signs.line2", "")) + time);
 		sign.getSide(Side.FRONT).setLine(3, Util.colourText(plugin.getConfig().getString("signs.line3", "")) + courseName);
+		sign.setWaxed(true);
 		sign.update();
 	}
 }
