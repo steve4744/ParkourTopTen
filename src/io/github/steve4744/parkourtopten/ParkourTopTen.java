@@ -17,6 +17,7 @@ public class ParkourTopTen extends JavaPlugin {
 	private String version;
 	private BlockHandler blockHandler;
 	private SignHandler signHandler;
+	private static final int SPIGOT_ID = 46268;
 	private static final int BSTATS_PLUGIN_ID = 2147;
 
 	@Override
@@ -52,7 +53,7 @@ public class ParkourTopTen extends JavaPlugin {
 				public void run() {
 					reload();
 				}
-			}.runTaskLater(this, 20L);
+			}.runTaskLater(this, 40L);
 		}
 	}
 
@@ -125,19 +126,20 @@ public class ParkourTopTen extends JavaPlugin {
 		if(!getConfig().getBoolean("checkForUpdate", true)) {
 			return;
 		}
-		new BukkitRunnable() {
-			@Override
-			public void run() {
-				String latestVersion = VersionChecker.getVersion();
-				if (latestVersion == "error") {
-					getLogger().info("Error attempting to check for new version. Please report it here: https://www.spigotmc.org/threads/parkour-top-ten.268403/");
-				} else {
-					if (!version.equals(latestVersion)) {
-						getLogger().info("New version " + latestVersion + " available on Spigot: https://www.spigotmc.org/resources/parkour-top-ten.46268/");
-					}
-				}
+		new VersionChecker(this, SPIGOT_ID).getVersion(latestVersion -> {
+			if (version.equals(latestVersion)) {
+				getLogger().info("You are running the most recent version");
+
+			} else if (version.contains("beta") || version.toLowerCase().contains("snapshot")) {
+				getLogger().info("You are running dev build: " + version);
+				getLogger().info("Latest release: " + latestVersion);
+
+			} else if (Character.isDigit(latestVersion.charAt(0))) {
+				getLogger().info("Current version: " + version);
+				getLogger().info("Latest release: " + latestVersion);
+				getLogger().info("Latest release available from Spigot: https://www.spigotmc.org/resources/PakourTopTen." + SPIGOT_ID + "/");
 			}
-		}.runTaskLaterAsynchronously(this, 50L);
+		});
 	}
 
 }
