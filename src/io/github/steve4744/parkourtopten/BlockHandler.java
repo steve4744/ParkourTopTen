@@ -9,6 +9,7 @@ import org.bukkit.block.data.Rotatable;
 
 public class BlockHandler {
 
+	@SuppressWarnings("unused")
 	private final ParkourTopTen plugin;
 
 	public BlockHandler(ParkourTopTen plugin) {
@@ -40,14 +41,15 @@ public class BlockHandler {
 	 * @param block
 	 * @return
 	 */
-	public Block getHeadBlock(Block block) {
+	public Block getHeadBlock(Block block, String position) {
 		BlockFace directionFacing = getFacingDirection(block);
-		boolean placeAboveSign = plugin.getConfig().getBoolean("placeHeadAboveSign");
-		return placeAboveSign ? block.getRelative(BlockFace.UP) : block.getRelative(BlockFace.UP).getRelative(directionFacing.getOppositeFace());
+		return position.equalsIgnoreCase("a") ?
+				block.getRelative(BlockFace.UP) :
+				block.getRelative(BlockFace.UP).getRelative(directionFacing.getOppositeFace());
 	}
 
-	public void removeHead(Block block) {
-		getHeadBlock(block).setType(Material.AIR);
+	public void removeHead(Block block, String position) {
+		getHeadBlock(block, position).setType(Material.AIR);
 	}
 
 }

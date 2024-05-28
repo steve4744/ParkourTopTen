@@ -56,6 +56,12 @@ public class ParkourTopTenCommand implements CommandExecutor {
 				return false;
 			}
 
+			// Get whether to place the head above the sign or on the block behind the sign
+			String position = "b";
+			if (arg3.length > 2 && (arg3[2].equalsIgnoreCase("a") || arg3[2].equalsIgnoreCase("above"))) {
+				position = "a";
+			}
+
 			Block lastBlock = player.getTargetBlock(null, 10);
 
 			if (plugin.isDebug()) {
@@ -89,7 +95,7 @@ public class ParkourTopTenCommand implements CommandExecutor {
 				}
 			}
 
-			CourseListener newTopTen = new CourseListener(plugin, lastBlock.getLocation(), right, arg3[1]);
+			CourseListener newTopTen = new CourseListener(plugin, lastBlock.getLocation(), right, arg3[1], position);
 			topTen.add(newTopTen);
 			plugin.getServer().getPluginManager().registerEvents(newTopTen, plugin);
 			player.sendMessage(ChatColor.GREEN + "ParkourTopTen heads created for course " + ChatColor.AQUA + arg3[1]);

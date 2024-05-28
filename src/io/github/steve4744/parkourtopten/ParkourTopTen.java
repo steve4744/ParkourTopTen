@@ -53,12 +53,14 @@ public class ParkourTopTen extends JavaPlugin {
 				public void run() {
 					reload();
 				}
-			}.runTaskLater(this, 40L);
+			}.runTaskLater(this, 20L);
 		}
 	}
 
 	@Override
 	public void onDisable() {
+		//ensure old format displays are updated
+		saveDisplays();
 	}
 
 	private void reload() {
@@ -66,23 +68,35 @@ public class ParkourTopTen extends JavaPlugin {
 		List<String> serialize = getConfig().getStringList("panels");
 		for (String panel : serialize) {
 			try {
-				String direction = panel.substring(panel.lastIndexOf(':')+1);
+				String[] parts = panel.split(":");
+
+				String course = parts[0];
+
+				String direction = parts[7];
 				BlockFace dir = BlockFace.valueOf(direction);
 
 				String location = panel.substring(panel.indexOf(':')+1, panel.lastIndexOf(':'));
+				if (parts.length > 8) {
+					String temp = panel.substring(panel.indexOf(':')+1, panel.lastIndexOf(':'));
+					location = temp.substring(0, temp.lastIndexOf(':'));
+				}
+
 				Location loc = Util.getLocationString(location);
 				if (loc == null) {
 					getLogger().severe("The location of the top ten panel does not exist. Maybe a world was deleted?");
 					continue;
 				}
 
-				String course = panel.substring(0, panel.indexOf(':'));
-
-				if (isDebug()) {
-					getLogger().info("DEBUG: [pTT] new top ten panel at " + loc + " heading " + dir + " for " + course);
+				String position = parts.length > 8 ? parts[8] : null;
+				if (position == null || (!position.equalsIgnoreCase("a") && !position.equalsIgnoreCase("b"))) {
+					position = getConfig().getBoolean("placeHeadAboveSign") ? "a" : "b";
 				}
 
-				CourseListener newTopTen = new CourseListener(this, loc, dir, course);
+				if (isDebug()) {
+					getLogger().info("DEBUG: [pTT] new top ten panel at " + loc + " heading " + dir + " for " + course + " positioning " + position);
+				}
+
+				CourseListener newTopTen = new CourseListener(this, loc, dir, course, position);
 
 				commandListener.addTopTen(newTopTen);
 				getServer().getPluginManager().registerEvents(newTopTen, this);
@@ -101,7 +115,10 @@ public class ParkourTopTen extends JavaPlugin {
 		}
 		List<String> serialize = new ArrayList<>();
 		for (CourseListener panel : commandListener.getTopTen()) {
-			serialize.add(panel.getCourseName() + ":" + Util.getStringLocation(panel.getTopTenLocation()) + ":" + panel.getDirection().toString());
+			serialize.add(panel.getCourseName() + ":" +
+						  Util.getStringLocation(panel.getTopTenLocation()) + ":" +
+						  panel.getDirection().toString() + ":" +
+						  panel.getPosition());
 		}
 		if (isDebug()) {
 			getLogger().info("DEBUG: [pTT] panels serialized: " + serialize.size());
