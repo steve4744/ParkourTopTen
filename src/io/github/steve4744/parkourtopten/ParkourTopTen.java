@@ -59,12 +59,11 @@ public class ParkourTopTen extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
-		//ensure old format displays are updated
-		saveDisplays();
 	}
 
 	private void reload() {
 		// Load any existing panels
+		boolean requireUpdate = false;
 		List<String> serialize = getConfig().getStringList("panels");
 		for (String panel : serialize) {
 			try {
@@ -90,6 +89,7 @@ public class ParkourTopTen extends JavaPlugin {
 				String position = parts.length > 8 ? parts[8] : null;
 				if (position == null || (!position.equalsIgnoreCase("a") && !position.equalsIgnoreCase("b"))) {
 					position = getConfig().getBoolean("placeHeadAboveSign") ? "a" : "b";
+					requireUpdate = true;
 				}
 
 				if (isDebug()) {
@@ -105,6 +105,9 @@ public class ParkourTopTen extends JavaPlugin {
 				getLogger().severe("Problem loading panel " + panel + " skipping...");
 				e.printStackTrace();
 			}
+		}
+		if (requireUpdate) {
+			saveDisplays();
 		}
 		getLogger().info("Loaded " + commandListener.getTopTen().size() + " top ten displays");
 	}
