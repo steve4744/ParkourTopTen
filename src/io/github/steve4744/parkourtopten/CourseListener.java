@@ -13,6 +13,7 @@ import org.bukkit.block.data.Rotatable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.profile.PlayerProfile;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import io.github.a5h73y.parkour.Parkour;
@@ -30,6 +31,7 @@ public class CourseListener implements Listener {
 	private Location topTenLocation;
 	private BlockFace direction;
 	private String courseName;
+	private String position;
 
 	/**
 	 * @param plugin
@@ -37,11 +39,12 @@ public class CourseListener implements Listener {
 	 * @param direction
 	 * @param courseName
      */
-	public CourseListener(ParkourTopTen plugin, Location topTenLocation, BlockFace direction, String courseName) {
+	public CourseListener(ParkourTopTen plugin, Location topTenLocation, BlockFace direction, String courseName, String position) {
 		this.plugin = plugin;
 		this.topTenLocation = topTenLocation;
 		this.direction = direction;
 		this.courseName = courseName;
+		this.position = position;
 		displayTopTen();
 	}
 
@@ -106,7 +109,7 @@ public class CourseListener implements Listener {
 				plugin.getLogger().info("DEBUG: [dTT] " + i);
 				plugin.getLogger().info("DEBUG: [dTT] " + topten.get(i).getPlayerName());
 				plugin.getLogger().info("DEBUG: [dTT] " + topten.get(i).getPlayerId());
-				plugin.getLogger().info("DEBUG: [dTT] " + PlayerUtils.padPlayerUuid(topten.get(i).getPlayerId()));
+				plugin.getLogger().info("DEBUG: [dTT] " + getUuid(topten.get(i).getPlayerId()));
 				plugin.getLogger().info("DEBUG: [dTT] " + DateTimeUtils.displayCurrentTime(topten.get(i).getTime()));
 			}
 
@@ -122,7 +125,7 @@ public class CourseListener implements Listener {
 					DateTimeUtils.displayCurrentTime(topten.get(i).getTime()), courseName);
 
 			// Get the block above the block that the sign is attached to
-			Block headBlock = plugin.getBlockHandler().getHeadBlock(b);
+			Block headBlock = plugin.getBlockHandler().getHeadBlock(b, position);
 
 			// Check if its already a SKULL
 			if (headBlock.getType() != Material.PLAYER_HEAD) {
@@ -133,10 +136,18 @@ public class CourseListener implements Listener {
 			skullData.setRotation(directionFacing.getOppositeFace());
 			headBlock.setBlockData(skullData);
 
-			// Set the owner
-			Skull skull = (Skull)headBlock.getState();
-			skull.setOwningPlayer(Bukkit.getOfflinePlayer(UUID.fromString(PlayerUtils.padPlayerUuid(topten.get(i).getPlayerId()))));
-			skull.update();
+			// Get the player profile from the uuid
+			Skull skull = (Skull) headBlock.getState();
+			PlayerProfile profile = Bukkit.createPlayerProfile(getUuid(topten.get(i).getPlayerId()), topten.get(i).getPlayerName());
+
+			profile.update().thenAcceptAsync(updatedProfile -> {
+				if (plugin.isDebug()) {
+					plugin.getLogger().info("DEBUG: [dTT] Texture = " + updatedProfile.getTextures());
+				}
+				// Update with the skin contained in the profile
+				skull.setOwnerProfile(updatedProfile);
+				skull.update();
+			}, runnable -> Bukkit.getScheduler().runTask(plugin, runnable));
 
 			// Move to the next block
 			b = b.getRelative(direction);
@@ -153,7 +164,7 @@ public class CourseListener implements Listener {
 				}
 
 				plugin.getSignHandler().updateSign(b, j, "", "", courseName);
-				plugin.getBlockHandler().removeHead(b);
+				plugin.getBlockHandler().removeHead(b, position);
 				b = b.getRelative(direction);
 			}
 		}
@@ -174,7 +185,7 @@ public class CourseListener implements Listener {
 			}
 
 			plugin.getSignHandler().resetSign(b);
-			plugin.getBlockHandler().removeHead(b);
+			plugin.getBlockHandler().removeHead(b, position);
 			b = b.getRelative(direction);
 		}
 	}
@@ -201,6 +212,13 @@ public class CourseListener implements Listener {
 	}
 
 	/**
+	 * @return the position of the head
+	 */
+	public String getPosition() {
+		return position;
+	}
+
+	/**
 	 * @param topTenLocation the topTenLocation to set
 	 */
 	public void setTopTenLocation(Location topTenLocation) {
@@ -212,6 +230,14 @@ public class CourseListener implements Listener {
 	 */
 	public void setDirection(BlockFace direction) {
 		this.direction = direction;
+	}
+
+	/**
+	 * @param playerId
+	 * @return UUID
+	 */
+	private UUID getUuid (String playerId) {
+		return UUID.fromString(PlayerUtils.padPlayerUuid(playerId));
 	}
 
 }
