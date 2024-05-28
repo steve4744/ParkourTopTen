@@ -164,7 +164,9 @@ public class ParkourTopTenCommand implements CommandExecutor {
 		player.sendMessage(ChatColor.AQUA + "To create a top ten display for a course:");
 		player.sendMessage(ChatColor.AQUA + "  : build a row of signs");
 		player.sendMessage(ChatColor.AQUA + "  : look at the left-most sign and type the create command");
-		player.sendMessage(ChatColor.WHITE + "  /ptt create [course] " + ChatColor.AQUA + "- specifying a valid Parkour course");
+		player.sendMessage(ChatColor.WHITE + "  /ptt create [course] [head position]");
+		player.sendMessage(ChatColor.AQUA  + "     where [course] = a valid Parkour course");
+		player.sendMessage(ChatColor.AQUA  + "	   where [head position] = above or behind (default) the sign");
 		player.sendMessage("");
 		player.sendMessage(ChatColor.AQUA + "To remove a top ten display for a course:");
 		player.sendMessage(ChatColor.AQUA + "  : look at the left-most sign and type the remove command");

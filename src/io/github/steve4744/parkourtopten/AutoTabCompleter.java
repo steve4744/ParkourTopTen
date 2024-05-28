@@ -16,6 +16,9 @@ public class AutoTabCompleter implements TabCompleter {
 	private static final List<String> ADMIN_COMMANDS = Arrays.asList(
 			"help", "create", "remove", "reload");
 
+	private static final List<String> CREATE_OPTIONS = Arrays.asList(
+			"above", "behind");
+
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command cmd, String alias, String[] args) {
 		if (!(sender instanceof Player)) {
@@ -34,6 +37,12 @@ public class AutoTabCompleter implements TabCompleter {
 		} else if (args.length == 2 && player.hasPermission("parkourtopten.admin")) {
 			if (args[0].equalsIgnoreCase("create")) {
 				list.addAll(Parkour.getInstance().getCourseManager().getCourseNames());
+			} else if (args[0].equalsIgnoreCase("remove")) {
+				list.add("all");
+			}
+		} else if (args.length == 3 && player.hasPermission("parkourtopten.admin")) {
+			if (args[0].equalsIgnoreCase("create")) {
+				list.addAll(CREATE_OPTIONS);
 			}
 		}
 		for (String s : list) {
