@@ -107,6 +107,7 @@ public class ParkourTopTen extends JavaPlugin {
 			}
 		}
 		if (requireUpdate) {
+			getConfig().set("placeHeadAboveSign", null);
 			saveDisplays();
 		}
 		getLogger().info("Loaded " + commandListener.getTopTen().size() + " top ten displays");
